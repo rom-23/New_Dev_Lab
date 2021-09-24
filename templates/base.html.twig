@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('style') }}
+    {% endblock %}
+</head>
+<body>
+
+
+    {%- block body_navbar -%}{%- endblock -%}
+
+    {% block body %}{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        {% if symfonyRoutes is defined %}
+        window.symfonyRoutes = {{ symfonyRoutes|json_encode|raw }};
+        {% endif %}
+    </script>
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>

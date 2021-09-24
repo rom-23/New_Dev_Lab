@@ -1,0 +1,17 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
+@import '~vuetify/dist/vuetify.min.css';
+@import '~vue-select/src/scss/vue-select.scss';
+@import '~@mdi/font/css/materialdesignicons.css';
+@import 'vuenavbar';
+html{
+    scroll-behavior: smooth;
+}
+.main-container{
+    background: darkblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2em;
+}
+[v-cloak] { display: none; }
