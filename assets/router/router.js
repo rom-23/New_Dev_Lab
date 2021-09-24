@@ -24,7 +24,7 @@ export default new Router({
             name       : 'modelism',
             components : {
                 main: () => {
-                    return import('../components/NewPost');
+                    return import('../components/Modelism');
                 }
             }
         },
