@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -25,12 +26,14 @@ class Model
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"get"})
      */
     private $id;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true))
+     * @Groups({"get"})
      */
     private $filename;
 
@@ -56,11 +59,13 @@ class Model
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"get"})
      */
     private $description;
 
@@ -86,11 +91,13 @@ class Model
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Image", mappedBy="models", cascade={"persist", "remove"})
+     * @Groups({"get"})
      */
     private $images;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="models", cascade={"persist"})
+     * @Groups({"get"})
      */
     private $categories;
 

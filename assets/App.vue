@@ -15,7 +15,7 @@
             <v-toolbar-items class="nav navLink">
                 <ul class="nav">
                     <router-link :to="{ name: 'users'}">Users</router-link>
-                    <router-link :to="{ name: 'table'}">Growing</router-link>
+                    <router-link :to="{ name: 'table'}">Dev</router-link>
                     <router-link :to="{ name: 'modelism'}">Modelism</router-link>
                 </ul>
             </v-toolbar-items>

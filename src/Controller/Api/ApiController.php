@@ -20,7 +20,6 @@ class ApiController extends AbstractController
 
     /**
      * @Route("/api/all-users", name="api_all_users", methods="GET")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
      * @param SerializerInterface $serializer
      * @param UserRepository $userRepository
      * @return JsonResponse
@@ -34,24 +33,23 @@ class ApiController extends AbstractController
 
     /**
      * @Route("/api/all-models", name="api_all_models", methods="GET")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
      * @param ModelRepository $modelRepository
      * @return JsonResponse
      */
-    public function getAllModels(ModelRepository $modelRepository): JsonResponse
+    public function getAllModels(ModelRepository $modelRepository, SerializerInterface $serializer): JsonResponse
     {
-        $models =$modelRepository->findModelPng();
-        $encoder = new JsonEncoder();
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getId();
-            },
-        ];
-        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
-        $serializer = new Serializer([$normalizer], [$encoder]);
+        $models = $modelRepository->findModelPng();
+//        $encoder        = new JsonEncoder();
+//        $normalizer     = new ObjectNormalizer();
+//        $serializer     = new Serializer([$normalizer], [$encoder]);
 
-        return new JsonResponse($serializer->serialize($models, 'json',['attributes'=>['name','filename','images'=>['path'],'description','categories'=>['name','id']]]), Response::HTTP_CREATED, [], true);
+//        return new JsonResponse($serializer->serialize($models, 'json', [
+////            'attributes'                 => ['name', 'filename', 'images' => ['path'], 'description', 'categories' => ['name', 'id']],
+//            'groups' => ['get']
+////            'circular_reference_handler' => function ($object) {
+////                return $object->getId();
+////            }
+//        ]), Response::HTTP_CREATED, [], true);
+        return $this->json($models, 200, [], ['groups' => 'get']);
     }
-
-
 }

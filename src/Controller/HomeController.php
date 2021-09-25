@@ -10,7 +10,6 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!admin).+"}, name="vue_routing")
      */
     public function index(): Response
     {
@@ -22,7 +21,6 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/app/{vueRouting}", name="vue_app")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
      */
     public function redirectToApp(): Response
     {
@@ -31,7 +29,6 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/test", name="test")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
      */
     public function test(): Response
     {

@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
+     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!apiplatform).+"}, name="vue_routing")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -25,14 +25,4 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
-
-    /**
-     * @Route("/logout", name="app_logout")
-     * @Route("/{vueRouting}", requirements={"route"="^.+"}, name="vue_routing")
-     */
-    public function logout()
-    {
-
-    }
-
 }

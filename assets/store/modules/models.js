@@ -18,14 +18,12 @@ const models = {
             Api.get(
                 '/api/all-models',
                 (response) => {
-                    // console.log(response.data[0].categories);
                     // let modelCategories = [];
                     // let json = response.data[0].categories;
                     // json.forEach(function (obj) {
                     //     modelCategories.push(obj.name);
                     // });
-                    // console.log(modelCategories);
-                    // commit('GET_CATEGORIES', modelCategories);
+                    console.log(response.data);
                     commit('GET_MODELS', response.data);
                 }
             ).catch(error => {
