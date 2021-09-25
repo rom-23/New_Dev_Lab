@@ -6,16 +6,11 @@
                     <v-icon color="white">mdi-home</v-icon>
                 </router-link>
             </v-btn>
-            <v-toolbar-items class="nav">
-                <ul class="nav">
-                    <li>VueJs Application</li>
-                </ul>
-            </v-toolbar-items>
             <div class="flex-grow-1"></div>
             <v-toolbar-items class="nav navLink">
                 <ul class="nav">
                     <router-link :to="{ name: 'users'}">Users</router-link>
-                    <router-link :to="{ name: 'table'}">Dev</router-link>
+                    <router-link :to="{ name: 'dev'}">Dev</router-link>
                     <router-link :to="{ name: 'modelism'}">Modelism</router-link>
                 </ul>
             </v-toolbar-items>

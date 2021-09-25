@@ -36,6 +36,15 @@ export default new Router({
                     return import('../components/Users');
                 }
             }
+        },
+        {
+            path       : '/app/dev',
+            name       : 'dev',
+            components : {
+                main: () => {
+                    return import('../components/Development');
+                }
+            }
         }
         // {
         //     path     : '*',

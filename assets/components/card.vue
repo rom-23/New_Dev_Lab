@@ -35,17 +35,13 @@
                 </v-card-actions>
             </v-card>
         </v-container>
-        <v-container>
-            <carousel-home></carousel-home>
-        </v-container>
     </v-container>
 </template>
 <script>
-import CarouselHome from './CarouselHome';
 
 export default {
     name       : 'card',
-    components : {CarouselHome},
+    components : {},
     data       : () => {
         return {};
     }

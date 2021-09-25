@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Repository\DevelopmentRepository;
 use App\Repository\ModelRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/all-models", name="api_all_models", methods="GET")
      * @param ModelRepository $modelRepository
+     * @param SerializerInterface $serializer
      * @return JsonResponse
      */
     public function getAllModels(ModelRepository $modelRepository, SerializerInterface $serializer): JsonResponse

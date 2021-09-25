@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import users from './modules/users.js';
 import models from './modules/models.js';
+import developments from './modules/developments.js';
 
 Vue.use(Vuex);
 
@@ -30,7 +31,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         users,
-        models
+        models,
+        developments
     },
     // plugins : [myPlugin],
     strict: true

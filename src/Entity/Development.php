@@ -5,11 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DevelopmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DevelopmentRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['post:write']],
+    normalizationContext: ['groups' => ['post:read']]
+)]
 class Development
 {
     /**
@@ -17,21 +21,25 @@ class Development
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['post:read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['post:read', 'post:write'])]
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
+    #[Groups(['post:read', 'post:write'])]
     private $content;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
+    #[Groups(['post:read'])]
     private $createdAt;
 
     public function __construct()

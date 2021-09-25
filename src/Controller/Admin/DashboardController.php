@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Development;
 use App\Entity\Image;
 use App\Entity\Model;
 use App\Entity\Option;
@@ -28,17 +29,20 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-                        ->setTitle('New Modelypse Admin');
+                        ->setTitle('Admin Home');
     }
 
     public function configureMenuItems(): iterable
     {
         return [
-            MenuItem::linktoDashboard('Home', 'fa fa-home'),
+            MenuItem::linkToRoute('Home', 'fas fa-home', 'home'),
+            MenuItem::section('Modelism'),
             MenuItem::linkToCrud('Model', 'fas fa-list', Model::class),
             MenuItem::linkToCrud('Category', 'fas fa-list', Category::class),
             MenuItem::linkToCrud('Option', 'fas fa-list', Option::class),
             MenuItem::linkToCrud('Image', 'fas fa-list', Image::class),
+            MenuItem::section('Dev'),
+            MenuItem::linkToCrud('Development', 'fas fa-list', Development::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('User', 'fas fa-list', User::class)
         ];
