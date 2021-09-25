@@ -18,7 +18,14 @@ const models = {
             Api.get(
                 '/api/all-models',
                 (response) => {
-                    console.log(response.data);
+                    // console.log(response.data[0].categories);
+                    // let modelCategories = [];
+                    // let json = response.data[0].categories;
+                    // json.forEach(function (obj) {
+                    //     modelCategories.push(obj.name);
+                    // });
+                    // console.log(modelCategories);
+                    // commit('GET_CATEGORIES', modelCategories);
                     commit('GET_MODELS', response.data);
                 }
             ).catch(error => {
@@ -41,6 +48,15 @@ const models = {
         allModels: state => {
             return state.models;
         }
+        // modelCategories: state => { // utiliser plugins !!!!!!
+        //     let model = state.models;
+        //     let categories = {'category': state.categories.toString()};
+        //     // model.category = state.categories.toString();
+        //     // let merged = {...model, ...categories};
+        //     let combined1 = [].concat(model, categories);
+        //     console.log(combined1);
+        //     return combined1;
+        // }
     }
 };
 export default models;

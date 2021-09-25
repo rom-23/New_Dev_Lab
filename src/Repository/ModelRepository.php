@@ -21,23 +21,20 @@ class ModelRepository extends ServiceEntityRepository
     }
 
     /** findModelPng
-     * @return Query
      */
-    public function findModelPng(): Query
+    public function findModelPng()
     {
         $sql = "
             SELECT
                 partial e.{id, name, description, price, filename, original},
-                partial ljim.{id, path},
-                partial ljca.{id, name}
+                partial ljca.{id, name},
+                partial ljim.{id, path}
             FROM App\Entity\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
-            WHERE ljca.name =:name
             ORDER BY e.name ASC
         ";
-        $aParameter = ['name' => 'modelisme',];
-        return $this->getEntityManager()->createQuery($sql)->setParameters($aParameter);
+        return $this->getEntityManager()->createQuery($sql)->getResult();
     }
 
     /** findDioramaPng

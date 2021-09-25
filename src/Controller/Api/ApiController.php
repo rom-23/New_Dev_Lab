@@ -40,7 +40,7 @@ class ApiController extends AbstractController
      */
     public function getAllModels(ModelRepository $modelRepository): JsonResponse
     {
-        $models =$modelRepository->findAll();
+        $models =$modelRepository->findModelPng();
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
@@ -50,7 +50,7 @@ class ApiController extends AbstractController
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
         $serializer = new Serializer([$normalizer], [$encoder]);
 
-        return new JsonResponse($serializer->serialize($models, 'json'), Response::HTTP_CREATED, [], true);
+        return new JsonResponse($serializer->serialize($models, 'json',['attributes'=>['name','filename','images'=>['path'],'description','categories'=>['name','id']]]), Response::HTTP_CREATED, [], true);
     }
 
 
