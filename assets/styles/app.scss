@@ -12,10 +12,12 @@ html{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 .front-app{
-    background: rgba(189, 53, 69, 0.9);
-box-shadow: 0 0 5px 5px #524c4c;
+    background: rgba(208, 81, 97, 0.9);
+    box-shadow: 0 0 5px 5px #524c4c;
 }
+
 [v-cloak] { display: none; }

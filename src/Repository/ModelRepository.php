@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Model;
+use App\Entity\Modelism\Model;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -29,7 +29,7 @@ class ModelRepository extends ServiceEntityRepository
                 partial e.{id, name, description, price, filename, original},
                 partial ljca.{id, name},
                 partial ljim.{id, path}
-            FROM App\Entity\Model e
+            FROM App\Entity\Modelism\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
             ORDER BY e.name ASC
@@ -47,7 +47,7 @@ class ModelRepository extends ServiceEntityRepository
                 partial e.{id, name, description, price, filename},
                 partial ljim.{id, path},
                 partial ljca.{id, name}
-            FROM App\Entity\Model e
+            FROM App\Entity\Modelism\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
             WHERE ljca.name =:name
@@ -67,7 +67,7 @@ class ModelRepository extends ServiceEntityRepository
                 partial e.{id, name, description, price, filename},
                 partial ljim.{id, path},
                 partial ljca.{id, name}
-            FROM App\Entity\Model e
+            FROM App\Entity\Modelism\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
             WHERE ljca.name =:name
@@ -87,7 +87,7 @@ class ModelRepository extends ServiceEntityRepository
                 partial e.{id, name, description, price, filename},
                 partial ljim.{id, path},
                 partial ljca.{id, name}
-            FROM App\Entity\Model e
+            FROM App\Entity\Modelism\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
             WHERE ljca.name =:name
@@ -107,7 +107,7 @@ class ModelRepository extends ServiceEntityRepository
                 partial e.{id, name, description, price, filename, original},
                 partial ljim.{id, path},
                 partial ljca.{id, name}
-            FROM App\Entity\Model e
+            FROM App\Entity\Modelism\Model e
             LEFT JOIN e.images ljim
             LEFT JOIN e.categories ljca
             WHERE ljca.name =:name

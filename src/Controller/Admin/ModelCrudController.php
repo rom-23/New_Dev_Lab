@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Image;
-use App\Entity\Model;
+use App\Entity\Modelism\Image;
+use App\Entity\Modelism\Model;
 use App\Form\ImageType;
 use Doctrine\ORM\Mapping\Id;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;

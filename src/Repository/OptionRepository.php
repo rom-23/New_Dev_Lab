@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Option;
+use App\Entity\Modelism\Option;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

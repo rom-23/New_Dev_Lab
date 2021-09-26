@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Modelism;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +9,6 @@ use Cocur\Slugify\Slugify;
 use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -80,7 +79,7 @@ class Model
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Option", inversedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Option", inversedBy="models")
      */
     private $options;
 
@@ -90,13 +89,13 @@ class Model
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Image", mappedBy="models", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Image", mappedBy="models", cascade={"persist", "remove"})
      * @Groups({"get"})
      */
     private $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="models", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Category", inversedBy="models", cascade={"persist"})
      * @Groups({"get"})
      */
     private $categories;

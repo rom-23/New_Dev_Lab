@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Modelism;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,7 +33,7 @@ class Category
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Model", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Model", mappedBy="categories")
      */
     private $models;
 

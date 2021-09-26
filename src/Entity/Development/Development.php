@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Development;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DevelopmentRepository;
@@ -42,6 +42,21 @@ class Development
     #[Groups(['post:read'])]
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filename;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="developments",cascade={"persist"})
+     */
+    private $section;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -60,7 +75,6 @@ class Development
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -72,7 +86,6 @@ class Development
     public function setContent(string $content): self
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -84,6 +97,46 @@ class Development
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param null|string $filename
+     * @return Development
+     */
+    public function setFilename(?string $filename): Development
+    {
+        $this->filename = $filename;
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
 
         return $this;
     }

@@ -2,11 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
-use App\Entity\Development;
-use App\Entity\Image;
-use App\Entity\Model;
-use App\Entity\Option;
+use App\Entity\Development\Section;
+use App\Entity\Modelism\Category;
+use App\Entity\Development\Development;
+use App\Entity\Modelism\Image;
+use App\Entity\Modelism\Model;
+use App\Entity\Modelism\Option;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -43,6 +44,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Image', 'fas fa-list', Image::class),
             MenuItem::section('Dev'),
             MenuItem::linkToCrud('Development', 'fas fa-list', Development::class),
+            MenuItem::linkToCrud('Section', 'fas fa-list', Section::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('User', 'fas fa-list', User::class)
         ];

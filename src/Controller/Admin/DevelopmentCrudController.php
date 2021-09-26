@@ -2,8 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Development;
+use App\Entity\Development\Development;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -20,7 +21,10 @@ class DevelopmentCrudController extends AbstractCrudController
         return [
             IdField::new('id', 'ID')->onlyOnIndex(),
             TextField::new('title'),
-            TextEditorField::new('content')
+            TextEditorField::new('content'),
+            TextField::new('slug'),
+            TextField::new('filename'),
+            AssociationField::new('section')
         ];
     }
 }

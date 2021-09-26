@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Modelism;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -26,7 +26,7 @@ class Option
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Model", mappedBy="options")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Model", mappedBy="options")
      */
     private $models;
 

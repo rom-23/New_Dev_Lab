@@ -2,23 +2,24 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Modelism\Category;
+use App\Entity\Development\Section;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CategoryCrudController extends AbstractCrudController
+class SectionCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Category::class;
+        return Section::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id', 'ID')->onlyOnIndex(),
-            TextField::new('name')
+            TextField::new('title')
         ];
     }
+
 }

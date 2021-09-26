@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Modelism;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,7 +33,7 @@ class Image
     private $path;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Model", inversedBy="images")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Model", inversedBy="images")
      */
     private $models;
 
