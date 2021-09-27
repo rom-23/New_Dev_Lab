@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Development;
 
 use App\Entity\Development\Development;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -17,6 +17,22 @@ class DevelopmentRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Development::class);
+    }
+
+    public function findDocBySection($title)
+    {
+        $sql = "
+                SELECT
+                  partial e.{id,title,content},
+                  partial ljco.{id, title}
+            FROM App\Entity\Development\Development e
+            INNER JOIN e.section ljco
+            WHERE ljco.title = :sectionTitle
+        ";
+        $aParameter = [
+            'sectionTitle' => $title
+        ];
+        return $this->getEntityManager()->createQuery($sql)->setParameters($aParameter)->getResult();
     }
 
     // /**

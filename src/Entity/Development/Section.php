@@ -2,15 +2,21 @@
 
 namespace App\Entity\Development;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Development\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SectionRepository::class)
  */
+#[ApiResource(
+    denormalizationContext: ['groups' => ['section:write']],
+    normalizationContext: ['groups' => ['section:read']]
+)]
 class Section
 {
     /**
@@ -18,16 +24,19 @@ class Section
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['section:read','development:read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['section:read','section:write', 'development:read'])]
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity=Development::class, mappedBy="section")
      */
+    #[Groups(['development:read'])]
     private $developments;
 
     #[Pure] public function __construct()

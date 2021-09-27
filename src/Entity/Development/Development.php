@@ -3,16 +3,61 @@
 namespace App\Entity\Development;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\DevelopmentRepository;
+use App\Controller\ApiPlatform\DevSectionController;
+use App\Repository\Development\DevelopmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DevelopmentRepository::class)
  */
-#[ApiResource(
-    denormalizationContext: ['groups' => ['post:write']],
-    normalizationContext: ['groups' => ['post:read']]
+#[
+ApiResource(
+    collectionOperations: [
+        'get',
+        'post',
+        'get_by_section' => [
+            'method'             => 'GET',
+            'path'               => '/section/{title}',
+            'controller'         => DevSectionController::class,
+            'read'               => false,
+            'pagination_enabled' => false,
+            'openapi_context'    => [
+                'summary'    => 'Récupère la documentation relative à la section',
+                'parameters' => [
+                    [
+                        'name'        => 'title',
+                        'in'          => 'path',
+                        'description' => 'The section of your Dev documentation',
+                        'type'        => 'string',
+                        'required'    => true,
+                        'example'     => 'PHP'
+                    ]
+                ],
+                'responses'  => [
+                    '200' => [
+                        'description' => 'OK',
+                        'content'     => [
+                            'application/json' => [
+                                'schema' => [
+                                    'type'    => 'string',
+                                    'example' => 'PHP'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ],
+    itemOperations: [
+        'get',
+        'patch',
+        'delete',
+        'put'
+    ],
+    denormalizationContext: ['groups' => ['development:write'],'enable_max_depth' =>true],
+    normalizationContext: ['groups' => ['development:read'],'enable_max_depth' =>true]
 )]
 class Development
 {
@@ -21,25 +66,25 @@ class Development
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['post:read'])]
+    #[Groups(['development:read'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['post:read', 'post:write'])]
+    #[Groups(['development:read', 'development:write'])]
     private $title;
 
     /**
      * @ORM\Column(type="text")
      */
-    #[Groups(['post:read', 'post:write'])]
+    #[Groups(['development:read', 'development:write'])]
     private $content;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    #[Groups(['post:read'])]
+    #[Groups(['development:read'])]
     private $createdAt;
 
     /**
@@ -55,6 +100,7 @@ class Development
     /**
      * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="developments",cascade={"persist"})
      */
+    #[Groups(['development:read', 'development:write'])]
     private $section;
 
     public function __construct()
@@ -89,7 +135,7 @@ class Development
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
