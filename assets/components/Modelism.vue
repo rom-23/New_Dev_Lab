@@ -1,6 +1,12 @@
 <template>
     <v-container>
-        <h4>Models List</h4>
+        <v-row justify="center">
+            <v-col sm="4">
+                <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
+                    All models list, using Symfony API
+                </v-alert>
+            </v-col>
+        </v-row>
         <v-layout row justify-space-around>
             <v-card  class="mx-auto my-12" v-for="model in all_models" :key="model.id" max-width="374">
                 <v-img max-width="374" :src="getImgUrl('models',model.filename)" v-bind:alt="model.filename"></v-img>

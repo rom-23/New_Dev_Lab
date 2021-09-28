@@ -3,18 +3,14 @@ import Api from '../../Api';
 const developments = {
     namespaced : true,
     state      : {
-        developments : [],
-        sections     : []
+        developments: []
     },
     mutations: {
         GET_DEV(state, developments) {
             state.developments = developments;
         },
-        SET_DEV(state, developments) {
-            state.developments.push(developments);
-        },
-        GET_SECTIONS(state, sections) {
-            state.sections = sections;
+        GET_DEV_BY_SECTION(state, developments) {
+            state.developments = developments;
         }
     },
     actions: {
@@ -29,23 +25,12 @@ const developments = {
                 console.log(error.message);
             });
         },
-        setDevelopment({commit}, params) {
-            Api.post(
-                '/api/model/add',
-                params,
-                (response) => {
-                    commit('SET_DEV', response.data);
-                }
-            ).catch(error => {
-                console.log(error.message);
-            });
-        },
-        getSections({commit}) {
+        getDevBySection({commit}, {sel}) {
             Api.get(
-                '/apiplatform/section/{title}',
+                `/apiplatform/developments/section/${sel}`,
                 (response) => {
-                    console.log(response.data);
-                    commit('GET_SECTIONS', response.data['hydra:member']);
+                    console.log(response.data['hydra:member']);
+                    commit('GET_DEV_BY_SECTION', response.data['hydra:member']);
                 }
             ).catch(error => {
                 console.log(error.message);
@@ -55,9 +40,6 @@ const developments = {
     getters: {
         allDevelopments: state => {
             return state.developments;
-        },
-        allSections: state => {
-            return state.sections;
         }
     }
 };

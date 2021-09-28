@@ -18,7 +18,7 @@ ApiResource(
         'post',
         'get_by_section' => [
             'method'             => 'GET',
-            'path'               => '/section/{title}',
+            'path'               => '/developments/section/{id}',
             'controller'         => DevSectionController::class,
             'read'               => false,
             'pagination_enabled' => false,
@@ -26,12 +26,11 @@ ApiResource(
                 'summary'    => 'Récupère la documentation relative à la section',
                 'parameters' => [
                     [
-                        'name'        => 'title',
+                        'name'        => 'id',
                         'in'          => 'path',
-                        'description' => 'The section of your Dev documentation',
-                        'type'        => 'string',
+                        'type'        => 'integer',
                         'required'    => true,
-                        'example'     => 'PHP'
+                        'description' => 'Filtre les documentations par section'
                     ]
                 ],
                 'responses'  => [
@@ -40,8 +39,8 @@ ApiResource(
                         'content'     => [
                             'application/json' => [
                                 'schema' => [
-                                    'type'    => 'string',
-                                    'example' => 'PHP'
+                                    'type'    => 'integer',
+                                    'example' => 2
                                 ]
                             ]
                         ]
@@ -56,8 +55,11 @@ ApiResource(
         'delete',
         'put'
     ],
-    denormalizationContext: ['groups' => ['development:write'],'enable_max_depth' =>true],
-    normalizationContext: ['groups' => ['development:read'],'enable_max_depth' =>true]
+    attributes: [
+        'order' => ['createdAt' => 'DESC']
+    ],
+    denormalizationContext: ['groups' => ['development:write'], 'enable_max_depth' =>true],
+    normalizationContext: ['groups' => ['development:read'], 'enable_max_depth' =>true]
 )]
 class Development
 {

@@ -27,10 +27,10 @@ class DevelopmentRepository extends ServiceEntityRepository
                   partial ljco.{id, title}
             FROM App\Entity\Development\Development e
             INNER JOIN e.section ljco
-            WHERE ljco.title = :sectionTitle
+            WHERE ljco.id = :sectionId
         ";
         $aParameter = [
-            'sectionTitle' => $title
+            'sectionId' => $title
         ];
         return $this->getEntityManager()->createQuery($sql)->setParameters($aParameter)->getResult();
     }
