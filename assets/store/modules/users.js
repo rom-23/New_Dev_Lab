@@ -18,7 +18,7 @@ const users = {
             Api.get(
                 '/api/all-users',
                 (response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     commit('GET_USERS', response.data);
                 }
             ).catch(error => {
@@ -27,8 +27,9 @@ const users = {
         },
         setUser({commit}, params) {
             Api.post(
-                '/api/users',
-                params,
+                '/api/users/add', {
+                    params
+                },
                 (response) => {
                     commit('SET_USER', response.data);
                 }

@@ -24,7 +24,7 @@ export default new Router({
             name       : 'modelism',
             components : {
                 main: () => {
-                    return import('../components/Modelism');
+                    return import('../components/modelism/Modelism');
                 }
             }
         },
@@ -33,7 +33,7 @@ export default new Router({
             name       : 'users',
             components : {
                 main: () => {
-                    return import('../components/Users');
+                    return import('../components/user/Users');
                 }
             }
         },
@@ -42,7 +42,7 @@ export default new Router({
             name       : 'dev',
             components : {
                 main: () => {
-                    return import('../components/Development');
+                    return import('../components/development/Development');
                 }
             }
         }

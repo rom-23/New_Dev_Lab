@@ -20,6 +20,7 @@
                 <v-layout column justify-space-around>
                     <v-flex md10>
                         <router-view name="main"></router-view>
+                        <router-view name="right"></router-view>
                     </v-flex>
                     <v-flex md8>
                         <router-view name="submain"></router-view>
