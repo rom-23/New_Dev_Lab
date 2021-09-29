@@ -19,7 +19,7 @@ const sections = {
                 '/apiplatform/sections',
                 (response) => {
                     console.log(response.data);
-                    commit('GET_SECTIONS', response.data['hydra:member']);
+                    commit('GET_SECTIONS', response.data);
                 }
             ).catch(error => {
                 console.log(error.message);

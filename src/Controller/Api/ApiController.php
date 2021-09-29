@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -64,15 +65,33 @@ class ApiController extends AbstractController
      * @param Request $request
      * @param SerializerInterface $serializer
      * @param EntityManagerInterface $em
+     * @param UserPasswordHasherInterface $passwordHasher
      * @return JsonResponse
      */
     public function addUser(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {
         $json = json_encode(json_decode($request->getContent())->params);
-        $user = $serializer->deserialize($json, User::class, 'json');
-        $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
-        $em->persist($user);
-        $em->flush();
-        return $this->json($user, 201, []);
+            $user = $serializer->deserialize($json, User::class, 'json');
+            $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
+            $em->persist($user);
+            $em->flush();
+            return $this->json($user, 201, []);
+    }
+
+    /**
+     * @Route("/api/development/add", name="api_add_development", methods="POST")
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
+     */
+    public function addDevelopment(Request $request, SerializerInterface $serializer, EntityManagerInterface $em): JsonResponse
+    {
+        dd(json_decode($request->getContent())->params);
+//        $json = dd(json_encode(json_decode($request->getContent())->params));
+//        $user = $serializer->deserialize($json, User::class, 'json');
+//        $em->persist($user);
+//        $em->flush();
+//        return $this->json($user, 201, []);
     }
 }

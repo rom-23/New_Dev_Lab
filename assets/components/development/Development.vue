@@ -17,6 +17,9 @@
             <v-card elevation="2" class="mx-auto my-12" v-for="dev in all_dev" :key="dev.id">
                 <v-card-title class="text-warning text--darken-4">{{ dev.title }}</v-card-title>
                 <v-card-text class="text-left" v-html="dev.content"></v-card-text>
+                <v-card-text>
+                    <v-btn color="success" class="mt-3" @click="addDocument(dev.id)">Add</v-btn>
+                </v-card-text>
             </v-card>
         </v-layout>
     </v-container>
@@ -59,7 +62,8 @@
 import {mapGetters} from 'vuex';
 
 export default {
-    name: 'Development',
+    name       : 'Development',
+    components : {},
     data() {
         return {
             selected: null
@@ -78,6 +82,13 @@ export default {
     methods: {
         getDevelopmentBySection() {
             this.$store.dispatch('developments/getDevBySection', {sel: this.selected});
+        },
+        addDocument(id) {
+            let payload = {
+                id   : id,
+                file : 'rrrrr.JPG'
+            };
+            this.$store.dispatch('developments/setDevelopmentDocument', payload);
         }
     },
     created: function () {
