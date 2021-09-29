@@ -18,7 +18,20 @@
                 <v-card-title class="text-warning text--darken-4">{{ dev.title }}</v-card-title>
                 <v-card-text class="text-left" v-html="dev.content"></v-card-text>
                 <v-card-text>
-                    <v-btn color="success" class="mt-3" @click="addDocument(dev.id)">Add</v-btn>
+                    <v-file-input
+                        accept="image/*"
+                        v-model="file"
+                        label="file"
+                        required
+                        clearable
+                    >
+                        <template v-slot:selection="{ text }">
+                            <v-chip small label color="primary">{{ text }}</v-chip>
+                        </template>
+                    </v-file-input>
+                </v-card-text>
+                <v-card-text>
+                    <v-btn color="success" class="mt-3" @click="addDocument(dev.id)">Add File</v-btn>
                 </v-card-text>
             </v-card>
         </v-layout>
@@ -60,13 +73,15 @@
 </style>
 <script>
 import {mapGetters} from 'vuex';
+import axios from 'axios';
 
 export default {
     name       : 'Development',
     components : {},
     data() {
         return {
-            selected: null
+            selected : null,
+            file     : null
         };
     },
     computed: {
@@ -84,11 +99,30 @@ export default {
             this.$store.dispatch('developments/getDevBySection', {sel: this.selected});
         },
         addDocument(id) {
-            let payload = {
-                id   : id,
-                file : 'rrrrr.JPG'
-            };
-            this.$store.dispatch('developments/setDevelopmentDocument', payload);
+            let formData = new FormData();
+            formData.append('file', this.file);
+            axios.post(`/apiplatform/developments/${id}/document`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(function() {
+                console.log('SUCCESS!!');
+            })
+                .catch(function() {
+                    console.log('FAILURE!!');
+                });
+            // let formData = new FormData();
+            // formData.append('file', this.file);
+            // formData.append('id', id);
+            //
+            // let payload = {
+            //     id   : id,
+            //     file : this.file
+            // };
+            // this.$store.dispatch('developments/setDevelopmentDocument', payload);
         }
     },
     created: function () {

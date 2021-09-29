@@ -22,7 +22,7 @@ const developments = {
             Api.get(
                 '/apiplatform/developments',
                 (response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     commit('GET_DEV', response.data);
                 }
             ).catch(error => {
@@ -33,7 +33,7 @@ const developments = {
             Api.get(
                 `/apiplatform/developments/section/${sel}`,
                 (response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     commit('GET_DEV_BY_SECTION', response.data);
                 }
             ).catch(error => {
@@ -42,6 +42,7 @@ const developments = {
         },
         setDevelopmentDocument({commit}, params) {
             let fileUrl = params['file'];
+            console.log(fileUrl);
             Api.post(
                 `/apiplatform/developments/${params['id']}/document`, {
                     fileUrl
