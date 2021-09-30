@@ -19,7 +19,7 @@
                 <v-card-text class="text-left" v-html="dev.content"></v-card-text>
                 <v-card-text>
                     <v-file-input
-                        accept="image/*"
+                        accept=".pdf"
                         v-model="file"
                         label="file"
                         required
@@ -101,6 +101,8 @@ export default {
         addDocument(id) {
             let formData = new FormData();
             formData.append('file', this.file);
+            // formData.append('id', id);
+
             axios.post(`/apiplatform/developments/${id}/document`,
                 formData,
                 {
@@ -114,15 +116,12 @@ export default {
                 .catch(function() {
                     console.log('FAILURE!!');
                 });
-            // let formData = new FormData();
-            // formData.append('file', this.file);
-            // formData.append('id', id);
-            //
+
             // let payload = {
             //     id   : id,
             //     file : this.file
             // };
-            // this.$store.dispatch('developments/setDevelopmentDocument', payload);
+            // this.$store.dispatch('developments/setDevelopmentDocument', formData);
         }
     },
     created: function () {

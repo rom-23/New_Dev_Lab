@@ -57,28 +57,15 @@ class Option
     }
 
     /**
-     * @return Collection
+     * @return Collection|Option
      */
     public function getModels(): Collection
     {
         return $this -> models;
     }
 
-    public function addModel( Model $model ): self
+    #[Pure] public function __toString()
     {
-        if(!$this -> models -> contains( $model )) {
-            $this -> models[] = $model;
-        }
-
-        return $this;
-    }
-
-    public function removeModel( Model $model ): self
-    {
-        if($this -> models -> contains( $model )) {
-            $this -> models -> removeElement( $model );
-        }
-
-        return $this;
+        return $this->getName();
     }
 }

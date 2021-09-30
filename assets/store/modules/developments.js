@@ -41,19 +41,29 @@ const developments = {
             });
         },
         setDevelopmentDocument({commit}, params) {
-            let fileUrl = params['file'];
-            console.log(fileUrl);
+            let file = params.get('file');
+            let id = params.get('id');
+
+            // console.log(params.get('id'));
+            // console.log(params.get('file'));
+
             Api.post(
-                `/apiplatform/developments/${params['id']}/document`, {
-                    fileUrl
+                `/apiplatform/developments/${id}/document`, {
+                    file
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 },
                 (response) => {
-                    console.log(response.data.fileUrl);
-                    commit('SET_DEV', response.data.fileUrl);
+                // console.log(response.data);
+                    commit('SET_DEV', response.data);
                 }
-            ).catch(error => {
-                console.log(error.message);
-            });
+            ).
+                catch(error => {
+                    console.log(error.message);
+                });
         }
     },
     getters: {

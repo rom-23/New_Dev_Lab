@@ -7,6 +7,7 @@ import router from './router/router';
 import store from './store';
 import vSelect from 'vue-select';
 import { BootstrapVue } from 'bootstrap-vue';
+import './plugins/select2';
 
 Vue.config.productionTip = false;
 Vue.component('v-select', vSelect);

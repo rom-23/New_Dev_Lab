@@ -79,7 +79,7 @@ class Model
     private $createdAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Option", inversedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Modelism\Option", inversedBy="models", cascade={"persist"})
      */
     private $options;
 
@@ -228,7 +228,7 @@ class Model
     }
 
     /**
-     * @return Collection
+     * @return Collection|Option
      */
     public function getOptions(): Collection
     {
@@ -239,9 +239,8 @@ class Model
     {
         if (!$this->options->contains($option)) {
             $this->options[] = $option;
-            $option->addModel($this);
+//            $option->addModel($this);
         }
-
         return $this;
     }
 
@@ -249,15 +248,8 @@ class Model
     {
         if ($this->options->contains($option)) {
             $this->options->removeElement($option);
-            $option->removeModel($this);
+//            $option->removeModel($this);
         }
-
-        return $this;
-    }
-
-    public function setOptions($options)
-    {
-        $this->options = $options;
 
         return $this;
     }

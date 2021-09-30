@@ -19,32 +19,14 @@ class OptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Option::class);
     }
 
-    // /**
-    //  * @return Option[] Returns an array of Option objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllOptions()
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "
+            SELECT
+                partial e.{id, name}
+            FROM App\Entity\Modelism\Option e
+            ORDER BY e.name ASC
+        ";
+        return $this->getEntityManager()->createQuery($sql)->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Option
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

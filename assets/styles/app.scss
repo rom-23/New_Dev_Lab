@@ -1,11 +1,24 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
 @import '~vuetify/dist/vuetify.min.css';
+
+@import '~select2/dist/css/select2.css';
 @import '~vue-select/src/scss/vue-select.scss';
 @import '~@mdi/font/css/materialdesignicons.css';
 @import 'vuenavbar';
 html{
     scroll-behavior: smooth;
+}
+#new-model{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#new-model td{
+
+}
+#add-images{
+    margin-left: 20px;
 }
 .main-container{
     background: #1ea471;
