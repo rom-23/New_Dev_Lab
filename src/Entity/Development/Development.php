@@ -6,10 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\ApiPlatform\DevSectionController;
 use App\Controller\ApiPlatform\DevUploadController;
 use App\Repository\Development\DevelopmentRepository;
+use DateTime;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -113,13 +117,13 @@ class Development
     private $content;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     #[Groups(['development:read'])]
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
@@ -151,10 +155,16 @@ class Development
     #[Groups(['development:read', 'development:write'])]
     private $section;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="developments",cascade={"persist"})
+     */
+    private $tags;
+
     public function __construct()
     {
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,23 +194,23 @@ class Development
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -217,6 +227,9 @@ class Development
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFilename(): ?string
     {
         return $this->filename;
@@ -253,12 +266,15 @@ class Development
     }
 
     /**
-     * @param File|null $file
+     * @param null|File $file
      * @return Development
      */
     public function setFile(?File $file): Development
     {
         $this->file = $file;
+        if ($this->file instanceof UploadedFile) {
+            $this->updatedAt = new \DateTime('now');
+        }
         return $this;
     }
 
@@ -277,6 +293,33 @@ class Development
     public function setFileUrl(?string $fileUrl): Development
     {
         $this->fileUrl = $fileUrl;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+//            $option->removeModel($this);
+        }
+
         return $this;
     }
 

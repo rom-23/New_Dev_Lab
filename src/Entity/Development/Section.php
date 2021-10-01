@@ -91,7 +91,7 @@ class Section
         return $this;
     }
 
-    #[Pure] public function __toString()
+    public function __toString()
     {
         return $this->getTitle();
     }

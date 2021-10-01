@@ -36,8 +36,8 @@ class ModelAddType extends AbstractType
     function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('originalFile', FileType::class,[
-                'label'      => 'Originale'
+            ->add('originalFile', FileType::class, [
+                'label' => 'Originale'
             ])
             ->add('name', TextType::class, [
                 'required'   => true,
@@ -50,8 +50,8 @@ class ModelAddType extends AbstractType
                 'label'    => 'Description',
                 'required' => false,
             ])
-            ->add('imageFile', FileType::class,[
-                'label'        => 'Thumb'
+            ->add('imageFile', FileType::class, [
+                'label' => 'Thumb'
             ])
             ->add('price', MoneyType::class)
             ->add('options', EntityType::class, [
@@ -73,6 +73,7 @@ class ModelAddType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'required'     => false,
+                'label'        => false,
                 'disabled'     => false
             ])
             ->add('categories', EntityType::class, [

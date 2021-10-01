@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Development\Section;
+use App\Entity\Development\Tag;
 use App\Entity\Modelism\Category;
 use App\Entity\Development\Development;
 use App\Entity\Modelism\Image;
@@ -45,6 +46,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('Dev'),
             MenuItem::linkToCrud('Development', 'fas fa-list', Development::class),
             MenuItem::linkToCrud('Section', 'fas fa-list', Section::class),
+            MenuItem::linkToCrud('Tags', 'fas fa-list', Tag::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('User', 'fas fa-list', User::class)
         ];
