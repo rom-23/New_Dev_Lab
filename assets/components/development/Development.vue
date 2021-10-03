@@ -13,7 +13,7 @@
                 <v-btn @click="getDevelopmentBySection" color="success" class="mt-5">Search</v-btn>
             </v-col>
         </v-row>
-        <v-layout>
+        <v-layout column align-content-space-around>
             <v-card elevation="2" class="mx-auto my-12" v-for="dev in all_dev" :key="dev.id">
                 <v-card-title class="text-warning text--darken-4">{{ dev.title }}</v-card-title>
                 <v-card-text class="text-left" v-html="dev.content"></v-card-text>
