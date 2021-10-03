@@ -2,8 +2,6 @@
 
 namespace App\Controller\RootAdmin;
 
-use App\Entity\Modelism\Model;
-use App\Form\ModelAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RootAdminHomeController extends AbstractController
 {
-    /**
-     * @Route("/root/admin/home", name="root_admin_home")
-     */
+    #[Route('/root/admin/home', name: 'root_admin_home')]
+
     public function home(Request $request, EntityManagerInterface $em): Response
     {
         return $this->render('root-admin/home.html.twig');

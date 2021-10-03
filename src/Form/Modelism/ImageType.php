@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Modelism;
 
 use App\Entity\Modelism\Image;
 use Symfony\Component\Form\AbstractType;

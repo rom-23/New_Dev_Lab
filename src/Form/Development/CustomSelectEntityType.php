@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Development;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Loader\Configurator\CollectionConfigurator;
 
-class SearchableEntityType extends AbstractType
+class CustomSelectEntityType extends AbstractType
 {
-    public  function __construct(private EntityManagerInterface $em){
+    public function __construct(private EntityManagerInterface $em)
+    {
 
     }
 
@@ -28,27 +26,21 @@ class SearchableEntityType extends AbstractType
         $resolver->setDefaults([
             'required' => false,
             'compound' => false,
-            'multiple' => true,
-            'search'=>'/search',
-            'value_property' => 'id',
-            'label_property' => 'name',
+            'multiple' => true
         ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['expanded'] = false;
-        $view->vars['attr']['class'] = 'advanced-select';
-        $view->vars['placeholder'] = null;
-        $view->vars['placeholder_in_choices'] = false;
-        $view->vars['multiple'] = true;
-        $view->vars['preferred_choices'] = [];
-        $view->vars['choices'] = $this->choices($form->getData());
+        $view->vars['expanded']                  = false;
+        $view->vars['attr']['class']             = 'advanced-select';
+        $view->vars['placeholder']               = null;
+        $view->vars['placeholder_in_choices']    = false;
+        $view->vars['multiple']                  = true;
+        $view->vars['preferred_choices']         = [];
+        $view->vars['choices']                   = $this->choices($form->getData(), $options['class']);
         $view->vars['choice_translation_domain'] = false;
-        $view->vars['full_name'] .= '[]';
-        $view->vars['attr']['data-remote'] = $options['search'];
-        $view->vars['attr']['data-value'] = $options['value_property'];
-        $view->vars['attr']['data-label'] = $options['label_property'];
+        $view->vars['full_name']                 .= '[]';
     }
 
     public function getBlockPrefix(): string
@@ -56,9 +48,13 @@ class SearchableEntityType extends AbstractType
         return 'choice';
     }
 
-    private function choices(Collection $value): array
+    private function choices(Collection $value, $options): array
     {
-        return $value
+        $choices = new ArrayCollection();
+        foreach ($this->em->getRepository($options)->findAll() as $a => $val) {
+            $choices->add($this->em->getRepository($options)->findAll()[$a]);
+        }
+        return $choices
             ->map(fn($d) => new ChoiceView($d, (string)$d->getId(), (string)$d))
             ->toArray();
     }
@@ -69,7 +65,7 @@ class SearchableEntityType extends AbstractType
             function (Collection $value): array {
                 return $value->map(fn($d) => (string)$d->getId())->toArray();
             },
-            function (array $ids) use ($options) : Collection {
+            function (array $ids) use ($options): Collection {
                 if (empty($ids)) {
                     return new ArrayCollection([]);
                 }

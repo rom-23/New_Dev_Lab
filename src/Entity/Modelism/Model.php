@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ModelRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Modelism\ModelRepository")
  * @UniqueEntity("name")
  * @Vich\Uploadable
  */

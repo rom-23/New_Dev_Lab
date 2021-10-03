@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Modelism;
 
 use App\Entity\Modelism\Option;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

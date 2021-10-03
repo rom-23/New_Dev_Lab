@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OptionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Modelism\OptionRepository")
  * @ORM\Table(name="`option`")
  */
 class Option

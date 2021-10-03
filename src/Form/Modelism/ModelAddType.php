@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Modelism;
 
 use App\Entity\Modelism\Category;
 use App\Entity\Modelism\Model;
 use App\Entity\Modelism\Option;
-use App\Repository\CategoryRepository;
-use App\Repository\OptionRepository;
+use App\Repository\Modelism\CategoryRepository;
+use App\Repository\Modelism\OptionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

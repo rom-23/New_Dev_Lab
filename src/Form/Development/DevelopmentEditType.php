@@ -1,18 +1,24 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Development;
 
 use App\Entity\Development\Development;
 use App\Entity\Development\Tag;
+use App\Form\Development\SearchableEntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DevelopmentAddType extends AbstractType
+class DevelopmentEditType extends AbstractType
 {
+
+    public function __construct(private UrlGeneratorInterface $url)
+    {
+
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -21,21 +27,15 @@ class DevelopmentAddType extends AbstractType
             ->add('content')
             ->add('slug')
             ->add('file', FileType::class, [
-                'label'       => 'Thumb',
-                'constraints' => [
-                    new File([
-                        'maxSize'          => '5M',
-                        'mimeTypes'        => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ]
+                'label'    => 'Fichier PDF',
+                'required' => false,
+                'attr'     => ['placeholder' => $options['data']->getFileName()]
             ])
             ->add('section')
-            ->add('tags', CustomSelectEntityType::class, [
-                'class' => Tag::class
+            ->add('tags', SearchableEntityType::class, [
+                'class'          => Tag::class,
+                'search'         => $this->url->generate('api_tag_development'),
+                'label_property' => 'name'
             ])
             ->add('submit', SubmitType::class);
     }

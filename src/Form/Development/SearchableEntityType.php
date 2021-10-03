@@ -1,25 +1,19 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Development;
 
-use App\Repository\Development\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\PersistentCollection;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\ChoiceList\View\ChoiceView;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Loader\Configurator\CollectionConfigurator;
-use function PHPUnit\Framework\returnArgument;
 
-class CustomSelectEntityType extends AbstractType
+class SearchableEntityType extends AbstractType
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -30,9 +24,12 @@ class CustomSelectEntityType extends AbstractType
     {
         $resolver->setRequired('class');
         $resolver->setDefaults([
-            'required' => false,
-            'compound' => false,
-            'multiple' => true
+            'required'       => false,
+            'compound'       => false,
+            'multiple'       => true,
+            'search'         => '/search',
+            'value_property' => 'id',
+            'label_property' => 'name',
         ]);
     }
 
@@ -44,9 +41,12 @@ class CustomSelectEntityType extends AbstractType
         $view->vars['placeholder_in_choices']    = false;
         $view->vars['multiple']                  = true;
         $view->vars['preferred_choices']         = [];
-        $view->vars['choices']                   = $this->choices($form->getData(), $options['class']);
+        $view->vars['choices']                   = $this->choices($form->getData());
         $view->vars['choice_translation_domain'] = false;
         $view->vars['full_name']                 .= '[]';
+        $view->vars['attr']['data-remote']       = $options['search'];
+        $view->vars['attr']['data-value']        = $options['value_property'];
+        $view->vars['attr']['data-label']        = $options['label_property'];
     }
 
     public function getBlockPrefix(): string
@@ -54,13 +54,9 @@ class CustomSelectEntityType extends AbstractType
         return 'choice';
     }
 
-    private function choices(Collection $value, $options): array
+    private function choices(Collection $value): array
     {
-        $choices    = new ArrayCollection();
-        foreach ($this->em->getRepository($options)->findAll() as $a => $val) {
-            $choices->add($this->em->getRepository($options)->findAll()[$a]);
-        }
-        return $choices
+        return $value
             ->map(fn($d) => new ChoiceView($d, (string)$d->getId(), (string)$d))
             ->toArray();
     }

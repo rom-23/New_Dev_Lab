@@ -309,14 +309,12 @@ class Development
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
         }
-
         return $this;
     }
 
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
-
         return $this;
     }
 
