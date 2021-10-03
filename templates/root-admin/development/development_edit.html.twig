@@ -4,7 +4,7 @@
     {{ form_start(form) }}
     <div class="main-container">
         <div class="row">
-            <div class="container form-model mb-2">
+            <div class="container form-model mb-2 mt-5">
                 <div class="row">
                     <div class="col-md-12 offset-md-5 mb-5 mt-0">
                         <h4 class="text-white">Edit new Development documentation</h4>
@@ -15,18 +15,20 @@
                     <tr>
                         <td class="text-white">{{- form_label(form.title) -}}</td>
                         <td>{{- form_widget(form.title) -}}</td>
-                        <td class="text-white">{{- form_label(form.file) -}}</td>
-                        <td>{{- form_widget(form.file,{ 'attr': {'class': 'form-control'}}) -}}</td>
-                    </tr>
-                    <tr>
                         <td class="text-white">{{- form_label(form.section) -}}</td>
                         <td>{{- form_widget(form.section) -}}</td>
-                        <td class="text-white">{{- form_label(form.content) -}}</td>
-                        <td>{{- form_widget(form.content) -}}</td>
-                        <td class="text-white">{{- form_label(form.slug) -}}</td>
-                        <td>{{- form_widget(form.slug) -}}</td>
+                    </tr>
+                    <tr>
                         <td class="text-white">{{- form_label(form.tags) -}}</td>
                         <td>{{- form_widget(form.tags) -}}</td>
+                        <td class="text-white">{{- form_label(form.slug) -}}</td>
+                        <td>{{- form_widget(form.slug) -}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-white">{{- form_label(form.content) -}}</td>
+                        <td>{{- form_widget(form.content) -}}</td>
+                        <td class="text-white">{{- form_label(form.file) -}}</td>
+                        <td>{{- form_widget(form.file,{ 'attr': {'class': 'form-control'}}) -}}</td>
                     </tr>
                     <tr>
                         <td>{{- form_widget(form.submit, {'attr':{'class':'btn btn-success w-100'}}) -}}</td>

@@ -5,6 +5,7 @@ namespace App\Form\Development;
 use App\Entity\Development\Development;
 use App\Entity\Development\Tag;
 use App\Form\Development\SearchableEntityType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,10 +25,15 @@ class DevelopmentEditType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content')
+            ->add('content', CKEditorType::class, [
+                'config' => [
+                    'uiColor' => '#ffffff'
+                ],
+                'label'  => false
+            ])
             ->add('slug')
             ->add('file', FileType::class, [
-                'label'    => 'Fichier PDF',
+                'label'    => false,
                 'required' => false,
                 'attr'     => ['placeholder' => $options['data']->getFileName()]
             ])
