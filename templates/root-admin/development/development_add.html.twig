@@ -1,39 +1,26 @@
-{%- set navbar = '/navbars/navbar2.html.twig' -%}
+{%- set navbar = '/navbars/admin_navbar.html.twig' -%}
 {% extends navbar %}
 {% block body %}
-    {% for messages in app.flashes(['success', 'warning', 'error']) %}
-        {% for message in messages %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>{{message}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    {% endfor %}
     {{ form_start(form) }}
     <div class="main-container">
         <div class="row">
             <div class="container form-model mb-2">
                 <div class="row">
                     <div class="col-md-12 offset-md-5 mb-5 mt-0">
-                        <h4 class="text-white">Edit new Development documentation</h4>
-                        <small class="text-white">Use Tom-select with Symfony Form (No JQuery)</small>
+                        <h4 class="text-white">Add new Development documentation</h4>
+                        <small class="text-white">Use Tom-select with Symfony (No JQuery)</small>
                     </div>
                 </div>
                 <table id="new-model" class="table-expend table-sm">
                     <tr>
                         <td class="text-white">{{- form_label(form.title) -}}</td>
                         <td>{{- form_widget(form.title) -}}</td>
-{#                        <td class="text-white">{{- form_label(form.filename) -}}</td>#}
-{#                        <td>{{- form_widget(form.filename,{ 'attr': {'class': 'form-control'}}) -}}</td>#}
                         <td class="text-white">{{- form_label(form.file) -}}</td>
                         <td>{{- form_widget(form.file,{ 'attr': {'class': 'form-control'}}) -}}</td>
-
-                    </tr>
-                    <tr>
                         <td class="text-white">{{- form_label(form.section) -}}</td>
                         <td>{{- form_widget(form.section) -}}</td>
+                    </tr>
+                    <tr>
                         <td class="text-white">{{- form_label(form.content) -}}</td>
                         <td>{{- form_widget(form.content) -}}</td>
                         <td class="text-white">{{- form_label(form.slug) -}}</td>

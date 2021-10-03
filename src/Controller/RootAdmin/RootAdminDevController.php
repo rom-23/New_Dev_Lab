@@ -17,7 +17,7 @@ class RootAdminDevController extends AbstractController
     #[Route('/root/admin/dev/list', name: 'root_admin_dev_list')]
     public function index(DevelopmentRepository $devRepository): Response
     {
-        return $this->render('root-admin/development_list.html.twig', [
+        return $this->render('root-admin/development/development_list.html.twig', [
             'developments' => $devRepository->findAll()
         ]);
     }
@@ -32,9 +32,9 @@ class RootAdminDevController extends AbstractController
             $dev->setFile($file);
             $dev->setUpdatedAt(new \DateTime());
             $em->flush();
-            $this->addFlash('success', "La documentation a bien été mise à jour");
+            return $this->redirectToRoute('root_admin_dev_list');
         }
-        return $this->render('root-admin/development_edit.html.twig', [
+        return $this->render('root-admin/development/development_edit.html.twig', [
             'dev'  => $dev,
             'form' => $form->createView()
         ]);
@@ -55,7 +55,7 @@ class RootAdminDevController extends AbstractController
             return $this->redirectToRoute('root_admin_home');
         }
 
-        return $this->render('root-admin/development_add.html.twig', [
+        return $this->render('root-admin/development/development_add.html.twig', [
             'form' => $form->createView()
         ]);
     }
