@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Repository\Development\DevelopmentRepository;
+use App\Repository\Development\TagRepository;
 use App\Repository\ModelRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -76,6 +77,12 @@ class ApiController extends AbstractController
             $em->persist($user);
             $em->flush();
             return $this->json($user, 201, []);
+    }
+
+    #[Route('/api/development/tags', name: 'api_tag_development')]
+    public function index(Request $request, TagRepository $tagRepository): JsonResponse
+    {
+        return $this->json($tagRepository->search($request->query->get('q')));
     }
 
     /**

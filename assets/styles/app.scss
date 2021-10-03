@@ -1,11 +1,12 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~bootstrap-vue/dist/bootstrap-vue.css';
 @import '~vuetify/dist/vuetify.min.css';
-
+@import '~tom-select/dist/css/tom-select.bootstrap5.css';
 @import '~select2/dist/css/select2.css';
 @import '~vue-select/src/scss/vue-select.scss';
 @import '~@mdi/font/css/materialdesignicons.css';
 @import 'vuenavbar';
+
 html{
     scroll-behavior: smooth;
 }

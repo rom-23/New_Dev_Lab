@@ -8,6 +8,7 @@ import store from './store';
 import vSelect from 'vue-select';
 import { BootstrapVue } from 'bootstrap-vue';
 import './plugins/select2';
+import './plugins/tom-select';
 
 Vue.config.productionTip = false;
 Vue.component('v-select', vSelect);

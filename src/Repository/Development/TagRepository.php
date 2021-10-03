@@ -4,6 +4,7 @@ namespace App\Repository\Development;
 
 use App\Entity\Development\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +20,20 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
-    // /**
-    //  * @return Tag[] Returns an array of Tag objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function search(string $tagName): array
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('u')
+                    ->where('u.name LIKE :tag_name')
+                    ->setParameter('tag_name', "%$tagName%")
+                    ->setMaxResults(15)
+                    ->getQuery()
+                    ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Tag
+    public function findAllTags() :array
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->createQueryBuilder('u')
+                    ->getQuery()
+                    ->getResult();
     }
-    */
 }

@@ -156,7 +156,7 @@ class Development
     private $section;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="developments",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=Tag::class)
      */
     private $tags;
 
@@ -297,7 +297,7 @@ class Development
     }
 
     /**
-     * @return Collection|Tag[]
+     * @return Collection
      */
     public function getTags(): Collection
     {
@@ -315,13 +315,12 @@ class Development
 
     public function removeTag(Tag $tag): self
     {
-        if ($this->tags->contains($tag)) {
-            $this->tags->removeElement($tag);
-//            $option->removeModel($this);
-        }
+        $this->tags->removeElement($tag);
 
         return $this;
     }
+
+
 
 
 }
