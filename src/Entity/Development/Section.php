@@ -25,13 +25,13 @@ class Section
      * @ORM\Column(type="integer")
      */
     #[Groups(['section:read','development:read'])]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['section:read','section:write', 'development:read'])]
-    private $title;
+    private ?string $title;
 
     /**
      * @ORM\OneToMany(targetEntity=Development::class, mappedBy="section")

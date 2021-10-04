@@ -31,7 +31,8 @@ class DevelopmentCrudController extends AbstractCrudController
             TextEditorField::new('content'),
             TextField::new('slug'),
             AssociationField::new('section'),
-            AssociationField::new('tags')
+            AssociationField::new('tags'),
+            AssociationField::new('posts')
         ];
         if ($pageName === Crud::PAGE_INDEX || $pageName === Crud::PAGE_DETAIL) {
             $fields[]= $doc;

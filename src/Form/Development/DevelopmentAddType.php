@@ -5,6 +5,7 @@ namespace App\Form\Development;
 use App\Entity\Development\Development;
 use App\Entity\Development\Tag;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,8 +20,8 @@ class DevelopmentAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class)
-            ->add('slug',TextType::class)
+            ->add('title', TextType::class)
+            ->add('slug', TextType::class)
             ->add('content', CKEditorType::class, [
                     'config' => [
                         'uiColor' => '#ffffff'
@@ -44,6 +45,17 @@ class DevelopmentAddType extends AbstractType
             ->add('section')
             ->add('tags', CustomSelectEntityType::class, [
                 'class' => Tag::class
+            ])
+            ->add('posts', CollectionType::class, [
+                'label'          => 'Posts',
+                'entry_type'     => PostType::class,
+                'prototype'      => true,
+                'allow_add'      => true,
+                'allow_delete'   => true,
+                'by_reference'   => false,
+                'required'       => false,
+                'disabled'       => false,
+                'error_bubbling' => false
             ])
             ->add('submit', SubmitType::class);
     }

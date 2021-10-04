@@ -2,6 +2,7 @@
 {% extends navbar %}
 {% block body %}
     {{ form_start(form) }}
+    {{ form_widget(form._token) }}
     <div class="main-container">
         <div class="row">
             <div class="container form-model mb-2 mt-5">
@@ -30,13 +31,27 @@
                         <td>{{- form_widget(form.file,{ 'attr': {'class': 'form-control'}}) -}}</td>
                     </tr>
                     <tr>
+                        <td class="text-white">
+                            <button class="btn btn-primary btn-new-post" type="button" data-collection="#posts">New Post</button>
+                            <div class="row" id="posts"
+                                 data-prototype="{{ include('root-admin/development/prototype/_post.html.twig', {form:form.posts.vars.prototype})|e('html_attr') }}"
+                                 data-index="{{ form.posts|length > 0 ? form.posts|last.vars.name + 1 : 0 }}">
+                                {% for post in form.posts %}
+                                    <div class="col-4">
+                                        {{ include('root-admin/development/prototype/_post.html.twig', {form:post}) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>{{- form_widget(form.submit, {'attr':{'class':'btn btn-warning w-100'}}) -}}</td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-    {{ form_end(form) }}
+    {{ form_end(form,{ render_rest: false }) }}
 {% endblock %}
 
 

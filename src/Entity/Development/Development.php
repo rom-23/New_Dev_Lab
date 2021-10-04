@@ -160,11 +160,17 @@ class Development
      */
     private $tags;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
+     */
+    private $posts;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->tags = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -315,6 +321,34 @@ class Development
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setDevelopment($this);
+        }
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getDevelopment() === $this) {
+                $post->setDevelopment(null);
+            }
+        }
         return $this;
     }
 

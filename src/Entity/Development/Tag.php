@@ -18,12 +18,12 @@ class Tag
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    private ?string $name;
 
     public function getId(): ?int
     {

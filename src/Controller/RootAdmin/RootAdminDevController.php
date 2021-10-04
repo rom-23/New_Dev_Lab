@@ -52,7 +52,7 @@ class RootAdminDevController extends AbstractController
             $development->setUpdatedAt(new \DateTime());
             $em->persist($development);
             $em->flush();
-            return $this->redirectToRoute('root_admin_home');
+            return $this->redirectToRoute('root_admin_dev_list');
         }
 
         return $this->render('root-admin/development/development_add.html.twig', [

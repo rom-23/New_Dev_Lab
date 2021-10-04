@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20211001115948 extends AbstractMigration
+final class Version20211004155854 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,14 @@ final class Version20211001115948 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE development CHANGE created_at created_at DATETIME NOT NULL, CHANGE updated_at updated_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8DB0B464C4');
+        $this->addSql('ALTER TABLE post ADD CONSTRAINT FK_5A8A6C8DB0B464C4 FOREIGN KEY (development_id) REFERENCES development (id) ON DELETE CASCADE');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE development CHANGE created_at created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE updated_at updated_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8DB0B464C4');
+        $this->addSql('ALTER TABLE post ADD CONSTRAINT FK_5A8A6C8DB0B464C4 FOREIGN KEY (development_id) REFERENCES development (id)');
     }
 }
