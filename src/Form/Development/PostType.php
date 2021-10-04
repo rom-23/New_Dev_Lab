@@ -3,6 +3,7 @@
 namespace App\Form\Development;
 
 use App\Entity\Development\Post;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +15,7 @@ class PostType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('content', TextType::class)
+            ->add('content', TextareaType::class)
         ;
     }
 

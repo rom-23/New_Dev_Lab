@@ -7,8 +7,10 @@ use App\Entity\Development\Tag;
 use App\Form\Development\SearchableEntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,14 +26,15 @@ class DevelopmentEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('title', TextType::class)
             ->add('content', CKEditorType::class, [
-                'config' => [
+                'config'   => [
                     'uiColor' => '#ffffff'
                 ],
-                'label'  => false
+                'label'    => false,
+                'required' => true
             ])
-            ->add('slug')
+            ->add('slug', TextType::class)
             ->add('file', FileType::class, [
                 'label'    => false,
                 'required' => false,
@@ -43,7 +46,20 @@ class DevelopmentEditType extends AbstractType
                 'search'         => $this->url->generate('api_tag_development'),
                 'label_property' => 'name'
             ])
-            ->add('submit', SubmitType::class);
+            ->add('posts', CollectionType::class, [
+                'label'          => 'Posts',
+                'entry_type'     => PostType::class,
+                'prototype'      => true,
+                'allow_add'      => true,
+                'allow_delete'   => true,
+                'by_reference'   => false,
+                'required'       => false,
+                'disabled'       => false,
+                'error_bubbling' => false
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Edit'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -7,7 +7,6 @@ use App\Controller\ApiPlatform\DevSectionController;
 use App\Controller\ApiPlatform\DevUploadController;
 use App\Repository\Development\DevelopmentRepository;
 use DateTime;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -102,35 +101,40 @@ class Development
      * @ORM\Column(type="integer")
      */
     #[Groups(['development:read'])]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['development:read', 'development:write'])]
-    private $title;
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
+    private ?string $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable="false")
      */
     #[Groups(['development:read', 'development:write'])]
-    private $content;
+    #[Assert\NotBlank]
+    private string $content;
 
     /**
      * @ORM\Column(type="datetime")
      */
     #[Groups(['development:read'])]
-    private $createdAt;
+    private DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private DateTime $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
+    private ?string $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -150,6 +154,7 @@ class Development
     private $fileUrl;
 
     /**
+     * @var Collection<int, Section>
      * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="developments",cascade={"persist"})
      */
     #[Groups(['development:read', 'development:write'])]
@@ -161,16 +166,18 @@ class Development
     private $tags;
 
     /**
+     * @var Collection<int, Post>
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
+    #[Assert\Valid]
     private $posts;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
-        $this->tags = new ArrayCollection();
-        $this->posts = new ArrayCollection();
+        $this->tags      = new ArrayCollection();
+        $this->posts     = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -351,8 +358,6 @@ class Development
         }
         return $this;
     }
-
-
 
 
 }

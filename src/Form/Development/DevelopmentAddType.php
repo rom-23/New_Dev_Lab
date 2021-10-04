@@ -3,7 +3,9 @@
 namespace App\Form\Development;
 
 use App\Entity\Development\Development;
+use App\Entity\Development\Section;
 use App\Entity\Development\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -20,8 +22,18 @@ class DevelopmentAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('slug', TextType::class)
+            ->add('title', TextType::class, [
+                'label' => false,
+                'attr'  => [
+                    'placeholder' => 'Enter a title'
+                ]
+            ])
+            ->add('slug', TextType::class, [
+                'label' => false,
+                'attr'  => [
+                    'placeholder' => 'Enter the slug'
+                ]
+            ])
             ->add('content', CKEditorType::class, [
                     'config' => [
                         'uiColor' => '#ffffff'
@@ -30,6 +42,7 @@ class DevelopmentAddType extends AbstractType
                 ]
             )
             ->add('file', FileType::class, [
+                'required'    => false,
                 'label'       => false,
                 'constraints' => [
                     new File([
@@ -42,9 +55,14 @@ class DevelopmentAddType extends AbstractType
                     ])
                 ]
             ])
-            ->add('section')
+            ->add('section', EntityType::class, [
+                'label'              => false,
+                'placeholder'        => 'Select a section',
+                'class'              => Section::class
+            ])
             ->add('tags', CustomSelectEntityType::class, [
-                'class' => Tag::class
+                'class' => Tag::class,
+                'label' => false
             ])
             ->add('posts', CollectionType::class, [
                 'label'          => 'Posts',
@@ -57,7 +75,9 @@ class DevelopmentAddType extends AbstractType
                 'disabled'       => false,
                 'error_bubbling' => false
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Save'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

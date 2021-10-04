@@ -36,6 +36,7 @@ class SearchableEntityType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['expanded']                  = false;
+        $view->vars['label']                     = 'Tags';
         $view->vars['attr']['class']             = 'advanced-select';
         $view->vars['placeholder']               = null;
         $view->vars['placeholder_in_choices']    = false;
@@ -67,7 +68,7 @@ class SearchableEntityType extends AbstractType
             function (Collection $value): array {
                 return $value->map(fn($d) => (string)$d->getId())->toArray();
             },
-            function (array $ids) use ($options): Collection {
+            function (?array $ids) use ($options): Collection {
                 if (empty($ids)) {
                     return new ArrayCollection([]);
                 }

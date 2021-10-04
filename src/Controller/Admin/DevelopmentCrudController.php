@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -32,7 +33,8 @@ class DevelopmentCrudController extends AbstractCrudController
             TextField::new('slug'),
             AssociationField::new('section'),
             AssociationField::new('tags'),
-            AssociationField::new('posts')
+            AssociationField::new('posts'),
+            DateField::new('createdAt')
         ];
         if ($pageName === Crud::PAGE_INDEX || $pageName === Crud::PAGE_DETAIL) {
             $fields[]= $doc;

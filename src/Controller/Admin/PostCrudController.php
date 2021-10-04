@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Development\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -19,7 +20,8 @@ class PostCrudController extends AbstractCrudController
         return [
             IdField::new('id', 'ID')->onlyOnIndex(),
             TextField::new('title'),
-            TextField::new('content')
+            TextField::new('content'),
+            DateField::new('createdAt')
 
         ];
     }

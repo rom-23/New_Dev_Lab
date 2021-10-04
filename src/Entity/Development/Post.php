@@ -5,6 +5,7 @@ namespace App\Entity\Development;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Development\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -22,11 +23,15 @@ class Post
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
     private ?string $title;
 
     /**
      * @ORM\Column(type="text")
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
     private ?string $content;
 
     /**

@@ -5,49 +5,19 @@
     {{ form_widget(form._token) }}
     <div class="main-container">
         <div class="row">
-            <div class="container form-model mb-2 mt-5">
-                <div class="row">
-                    <div class="col-md-12 offset-md-5 mb-5 mt-0">
-                        <h4 class="text-white">Add new Development documentation</h4>
-                        <small class="text-white">Use Tom-select with Symfony (No JQuery)</small>
+            <div class="container form-model mb-5 mt-5">
+                <div class="jumbotron jumbotron mb-3">
+                    <div class="container">
+                        <span class="lead"><strong>Add new Development documentation</strong></span>
+                        <p>
+                            <small>- Use Tom-select with for multi-select fields(No JQuery)</small><br>
+                            <small>- Use Symfony CollectionType and custom Searchable EntityType</small><br>
+                            <small>- Use VichUploader Bundle for uploading</small>
+                        </p>
                     </div>
                 </div>
-                <table id="new-model" class="table-expend table-sm">
-                    <tr>
-                        <td class="text-white">{{- form_label(form.title) -}}</td>
-                        <td>{{- form_widget(form.title) -}}</td>
-                        <td class="text-white">{{- form_label(form.section) -}}</td>
-                        <td>{{- form_widget(form.section) -}}</td>
-                    <tr>
-                        <td class="text-white">{{- form_label(form.tags) -}}</td>
-                        <td>{{- form_widget(form.tags) -}}</td>
-                        <td class="text-white">{{- form_label(form.slug) -}}</td>
-                        <td>{{- form_widget(form.slug) -}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-white">{{- form_label(form.content) -}}</td>
-                        <td>{{- form_widget(form.content) -}}</td>
-                        <td class="text-white">{{- form_label(form.file) -}}</td>
-                        <td>{{- form_widget(form.file,{ 'attr': {'class': 'form-control'}}) -}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-white">
-                            <button class="btn btn-primary btn-new-post" type="button" data-collection="#posts">New Post</button>
-                            <div class="row" id="posts"
-                                 data-prototype="{{ include('root-admin/development/prototype/_post.html.twig', {form:form.posts.vars.prototype})|e('html_attr') }}"
-                                 data-index="{{ form.posts|length > 0 ? form.posts|last.vars.name + 1 : 0 }}">
-                                {% for post in form.posts %}
-                                    <div class="col-4">
-                                        {{ include('root-admin/development/prototype/_post.html.twig', {form:post}) }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{{- form_widget(form.submit, {'attr':{'class':'btn btn-warning w-100'}}) -}}</td>
-                    </tr>
-                </table>
+                <hr>
+                {{ include('root-admin/development/form/_form.html.twig', {form: form}) }}
             </div>
         </div>
     </div>
