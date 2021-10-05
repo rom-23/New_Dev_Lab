@@ -71,9 +71,20 @@ class Api {
         });
     }
 
-    patch(path, payload, callback) {
+    delete(path, payload, callback) {
         return this.service.request({
-            method       : 'PATCH',
+            method       : 'DELETE',
+            url          : path,
+            responseType : 'json',
+            data         : payload
+        }).then((response) => {
+            return callback(response);
+        });
+    }
+
+    put(path, payload, callback) {
+        return this.service.request({
+            method       : 'PUT',
             url          : path,
             responseType : 'json',
             data         : payload

@@ -3,8 +3,10 @@
 namespace App\Entity\Development;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\User;
 use App\Repository\Development\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,11 +19,13 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:get"})
      */
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:get"})
      */
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
@@ -29,6 +33,7 @@ class Post
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"user:get"})
      */
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
@@ -36,6 +41,7 @@ class Post
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:get"})
      */
     private \DateTime $createdAt;
 
@@ -44,6 +50,13 @@ class Post
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private ?Development $development = null;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private User $author;
 
     public function __construct()
     {
@@ -103,5 +116,16 @@ class Post
     public function __toString()
     {
         return $this->title;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+        return $this;
     }
 }

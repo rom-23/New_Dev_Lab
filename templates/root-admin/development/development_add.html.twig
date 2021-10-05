@@ -5,6 +5,7 @@
     {{ form_widget(form._token) }}
     <div class="main-container">
         <div class="row">
+{#            {% if app.user %}{{ app.user.email }}{% endif %}#}
             <div class="container form-model mb-5 mt-5">
                 <div class="jumbotron jumbotron mb-3">
                     <div class="container">

@@ -33,7 +33,7 @@ export default new Router({
             name       : 'users',
             components : {
                 main: () => {
-                    return import('../components/user/Users');
+                    return import('../components/user/UserCrud');
                 }
             }
         },
