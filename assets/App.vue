@@ -28,7 +28,7 @@
                 </v-layout>
             </v-container>
         </v-main>
-        <v-footer padless color="red">
+        <v-footer padless color="#06988B">
             <v-col
                 class="text-center"
                 cols="12"

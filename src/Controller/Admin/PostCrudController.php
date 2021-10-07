@@ -22,8 +22,10 @@ class PostCrudController extends AbstractCrudController
             IdField::new('id', 'ID')->onlyOnIndex(),
             TextField::new('title'),
             TextField::new('content'),
-            AssociationField::new('author'),
-            DateField::new('createdAt')
+            AssociationField::new('development'),
+            AssociationField::new('user'),
+            DateField::new('createdAt'),
+            DateField::new('updatedAt')
         ];
     }
 }

@@ -31,12 +31,11 @@ class Section
      * @ORM\Column(type="string", length=255)
      */
     #[Groups(['section:read','section:write', 'development:read'])]
-    private ?string $title;
+    private string $title;
 
     /**
      * @ORM\OneToMany(targetEntity=Development::class, mappedBy="section")
      */
-    #[Groups(['development:read'])]
     private $developments;
 
     #[Pure] public function __construct()
@@ -49,7 +48,7 @@ class Section
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }

@@ -29,7 +29,6 @@ $(document).ready(function() {
 });
 
 // Prototype CollectionType in JS es6
-
 const newItem = (e) => {
     const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
     const postItem = document.createElement('div');

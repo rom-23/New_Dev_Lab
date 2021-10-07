@@ -57,10 +57,17 @@
                                             ></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="8" md="6">
-                                            <v-select class="style-chooser" v-model="editedItem.roles" :options="roles" :value="editedItem.roles"
-                                                      label="roles" placeholder="Select role">
-                                            </v-select>
+                                            <v-text-field
+                                                v-model="editedItem.roles"
+                                                label="roles"
+                                                clearable
+                                            ></v-text-field>
                                         </v-col>
+<!--                                        <v-col cols="12" sm="8" md="6">-->
+<!--                                            <v-select class="style-chooser" v-model="editedItem.roles" :options="roles" :value="editedItem.roles"-->
+<!--                                                      label="roles" placeholder="Select role">-->
+<!--                                            </v-select>-->
+<!--                                        </v-col>-->
                                         <v-col v-if="editedIndex === -1" cols="12" sm="12" md="12">
                                             <v-text-field
                                                 v-model="editedItem.password"

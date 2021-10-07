@@ -23,12 +23,14 @@ security:
       access_denied_handler: App\Security\AccessDeniedHandler
       lazy: true
       provider: app_user_provider
+      json_login:
+        check_path: api_platform_login
       custom_authenticator: App\Security\LoginFormAuthenticator
       logout:
         path: /logout
-        invalidate_session: false
+#        invalidate_session: false
         # where to redirect after logout
-        target: home
+#        target: home
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -41,4 +43,3 @@ security:
   access_control:
     - { path: ^/login$, roles: IS_ANONYMOUS }
     - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/test$, roles: ROLE_USER }

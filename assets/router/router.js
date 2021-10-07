@@ -12,11 +12,11 @@ export default new Router({
             name       : 'home',
             components : {
                 main: () => {
-                    return import('../components/Example');
-                },
-                submain: () => {
-                    return import('../components/card');
+                    return import('../components/Home');
                 }
+                // submain: () => {
+                //     return import('../components/card');
+                // }
             }
         },
         {

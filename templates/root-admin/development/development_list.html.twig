@@ -17,7 +17,7 @@
                 <th>Document</th>
                 <th>Section</th>
                 <th>Tags</th>
-                <th>Posts</th>
+                <th>Notes</th>
                 <th>Created</th>
                 <th>Actions</th>
             </tr>
@@ -31,7 +31,7 @@
                     <td>{{ dev.filename }}</td>
                     <td>{{ dev.section }}</td>
                     <td>{{ dev.tags.count }}</td>
-                    <td>{{ dev.posts.count }}</td>
+                    <td>{{ dev.notes.count }}</td>
                     <td>{{ dev.createdAt|date('d/m/y') }}</td>
                     <td>
                         <a href="{{ path('root_admin_dev_edit', {id: dev.id}) }}" class="btn btn-outline-primary btn-sm">Edit</a>

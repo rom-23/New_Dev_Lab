@@ -82,9 +82,9 @@ class Api {
         });
     }
 
-    put(path, payload, callback) {
+    patch(path, payload, callback) {
         return this.service.request({
-            method       : 'PUT',
+            method       : 'PATCH',
             url          : path,
             responseType : 'json',
             data         : payload

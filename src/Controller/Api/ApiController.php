@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\Development\TagRepository;
 use App\Repository\Modelism\ModelRepository;
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -68,7 +70,7 @@ class ApiController extends AbstractController
      * @param UserPasswordHasherInterface $passwordHasher
      * @return JsonResponse
      */
-    #[Route('/api/users/edit/{id}', name: 'api_add_user_edit', methods: 'PUT')]
+    #[Route('/api/users/edit/{id}', name: 'api_add_user_edit', methods: 'PATCH')]
     public function editUser(User $user, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {
         $json = json_encode(json_decode($request->getContent())->params);
@@ -85,7 +87,7 @@ class ApiController extends AbstractController
     #[Route('/api/users/remove/{id}', name: 'api_add_user_remove', methods: 'DELETE')]
     public function removeUser(User $user, EntityManagerInterface $em): JsonResponse
     {
-        $user=$em->getRepository(User::class)->find($user);
+        $user = $em->getRepository(User::class)->find($user);
         $em->remove($user);
         $em->flush();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

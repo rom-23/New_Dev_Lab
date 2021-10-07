@@ -1,0 +1,17 @@
+{%- set navbar = '/navbars/navbar.html.twig' -%}
+{% extends navbar %}
+{% block title %}Contact{% endblock %}
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('message') %}
+            <div class="p-3 my-2 rounded-2 success">{{ message }}</div>
+        {% endfor %}
+        <h1>Contact Us</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.sujet) }}
+        <p>Message</p>
+        {{ form_row(form.message) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

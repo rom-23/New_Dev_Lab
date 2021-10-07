@@ -33,6 +33,7 @@ class DevelopmentCrudController extends AbstractCrudController
             TextField::new('slug'),
             AssociationField::new('section'),
             AssociationField::new('tags'),
+            AssociationField::new('notes'),
             AssociationField::new('posts'),
             DateField::new('createdAt')
         ];

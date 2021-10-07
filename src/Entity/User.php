@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Action\NotFoundAction;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\ApiPlatform\UserLoginController;
 use App\Entity\Development\Post;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,6 +18,49 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
+#[ApiResource(
+    collectionOperations: [
+        'get',
+        'post' => [
+            'security'         => 'is_granted("ROLE_ADMIN")',
+            'security_message' => 'Only admins can add users.'
+        ],
+        'me'   => [
+            'pagination_enabled' => false,
+            'path'               => '/me',
+            'method'             => 'get',
+            'controller'         => UserLoginController::class,
+            'read'               => false,
+            'security'           => 'is_granted("ROLE_USER")',
+            'security_message'   => 'Sorry, but you are not the book owner.',
+            'openapi_context'            => [
+                'security' => ['cookieAuth' => ['']]
+            ]
+        ]
+    ],
+    itemOperations: [
+        'put'    => [
+            'security' => 'is_granted("ROLE_ADMIN", object)'
+        ],
+        'patch'  => [
+            'security' => 'is_granted("ROLE_ADMIN"), object'
+        ],
+        'delete' => [
+            'security' => 'is_granted("ROLE_ADMIN", object)'
+        ],
+        'get'    => [
+            'controller'      => NotFoundAction::class,
+            'openapi_context' => [
+                'summary' => 'hidden'
+            ],
+            'read'            => false,
+            'output'          => false
+        ]
+    ],
+    denormalizationContext: ['groups' => ['user:write']],
+    normalizationContext: ['groups' => ['user:read']],
+//    security: 'is_granted("ROLE_USER")'
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -23,18 +69,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * @Groups({"user:get"})
      */
+    #[Groups(['user:read', 'user:write'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:get"})
      */
+    #[Groups(['user:read', 'user:write'])]
     private ?string $email = null;
 
     /**
      * @ORM\Column(type="json")
      * @Groups({"user:get"})
      */
+    #[Groups(['user:read', 'user:write'])]
     private array $roles = [];
 
     /**
@@ -42,14 +91,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      * @Groups({"user:get"})
      */
-    private string $password;
+    #[Groups(['user:read', 'user:write'])]
+    private string $password = '';
 
     /**
      * @var Collection<int, Post>
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author", orphanRemoval=true, cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user", orphanRemoval=true, cascade={"persist","remove"})
      * @Groups({"user:get"})
      */
-    private Collection $posts;
+    #[Groups(['user:read'])]
+    private $posts;
 
     #[Pure] public function __construct()
     {
@@ -146,6 +197,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    #[Pure] public function __toString()
+    {
+        return $this->getUserIdentifier();
+    }
+
     /**
      * @return Collection
      */
@@ -158,7 +214,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->posts->contains($post)) {
             $this->posts[] = $post;
-            $post->setAuthor($this);
+            $post->setUser($this);
         }
 
         return $this;
@@ -168,15 +224,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->posts->removeElement($post)) {
             // set the owning side to null (unless already changed)
-            if ($post->getAuthor() === $this) {
-                $post->setAuthor(null);
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
             }
         }
-        return $this;
-    }
 
-    #[Pure] public function __toString()
-    {
-        return $this->getUserIdentifier();
+        return $this;
     }
 }

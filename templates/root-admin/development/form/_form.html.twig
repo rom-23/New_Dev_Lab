@@ -8,8 +8,6 @@
     <tr>
         <td>{{- form_label(form.tags) -}}</td>
         <td>{{- form_widget(form.tags) -}}</td>
-        <td>{{- form_label(form.slug) -}}</td>
-        <td>{{- form_widget(form.slug) -}}</td>
     </tr>
     <tr>
         <td>{{- form_label(form.content) -}}</td>
@@ -20,14 +18,14 @@
 </table>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <button class="btn btn-outline-primary btn-new-post mt-3 btn-sm" type="button" data-collection="#posts">Add New Post</button>
+        <button class="btn btn-outline-primary btn-new-post mt-3 btn-sm" type="button" data-collection="#posts">Add New Note</button>
     </div>
     <div class="row justify-content-center mt-3" id="posts"
-         data-prototype="{{ include('root-admin/development/prototype/_post.html.twig', {form:form.posts.vars.prototype})|e('html_attr') }}"
-         data-index="{{ form.posts|length > 0 ? form.posts|last.vars.name + 1 : 0 }}">
-        {% for post in form.posts %}
+         data-prototype="{{ include('root-admin/development/prototype/_note.html.twig', {form:form.notes.vars.prototype})|e('html_attr') }}"
+         data-index="{{ form.notes|length > 0 ? form.notes|last.vars.name + 1 : 0 }}">
+        {% for note in form.notes %}
             <div class="col-4">
-                {{ include('root-admin/development/prototype/_post.html.twig', {form:post}) }}
+                {{ include('root-admin/development/prototype/_note.html.twig', {form:note}) }}
             </div>
         {% endfor %}
     </div>

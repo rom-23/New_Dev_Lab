@@ -1,40 +1,35 @@
 <template>
-    <v-container>
-        <v-row justify="center">
-            <v-col sm="4">
-            <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
-                Documentation for Developments, using ApiPlatform
-            </v-alert>
-            </v-col>
-        </v-row>
-        <v-row justify="center">
-            <v-col sm="2">
-                <v-select class="style-chooser" v-model="selected" :options="all_sections" :value="selected" label="title" :reduce="section => section.id" placeholder="Select a language"></v-select>
-                <v-btn @click="getDevelopmentBySection" color="success" class="mt-5">Search</v-btn>
-            </v-col>
-        </v-row>
-        <v-layout column align-content-space-around>
-            <v-card elevation="2" class="mx-auto my-12" v-for="dev in all_dev" :key="dev.id">
-                <v-card-title class="text-warning text--darken-4">{{ dev.title }}</v-card-title>
-                <v-card-text class="text-left" v-html="dev.content"></v-card-text>
-                <v-card-text>
-                    <v-file-input
-                        accept=".pdf"
-                        v-model="file"
-                        label="file"
-                        required
-                        clearable
-                    >
-                        <template v-slot:selection="{ text }">
-                            <v-chip small label color="primary">{{ text }}</v-chip>
-                        </template>
-                    </v-file-input>
-                </v-card-text>
-                <v-card-text>
-                    <v-btn color="success" class="mt-3" @click="addDocument(dev.id)">Add File</v-btn>
-                </v-card-text>
-            </v-card>
+    <v-container grid-list-xl>
+        <v-layout row justify-space-center>
+            <v-row justify="center">
+                <v-col sm="6">
+                    <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
+                        Documentation for Developments, using ApiPlatform
+                    </v-alert>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col sm="3">
+                    <v-select class="style-chooser" name="selected" v-model="selected" :options="all_sections" :value="selected"
+                              label="title" placeholder="Select a language" item-value="id" item-text="title" return-object>
+                    </v-select>
+                    <v-btn @click="getDevelopmentBySection(selected.id)" color="success" class="mt-5">Search</v-btn>
+                </v-col>
+            </v-row>
         </v-layout>
+        <template v-if="selected.id">
+            <v-layout row justify-space-around>
+                <v-flex v-for="dev in all_dev" :key="dev.id" md3>
+                    <v-card elevation="2">
+                        <v-card-title class="text-warning text--darken-4">{{ dev.title }}</v-card-title>
+                        <v-card-text class="text-left caption" v-html="dev.content"></v-card-text>
+                        <v-card-text>
+                            <v-btn small color="success" class="mt-3">Add Comment</v-btn>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </template>
     </v-container>
 </template>
 <style>
@@ -73,56 +68,55 @@
 </style>
 <script>
 import {mapGetters} from 'vuex';
-import axios from 'axios';
 
 export default {
     name       : 'Development',
     components : {},
     data() {
         return {
-            selected : null,
+            selected : [],
             file     : null
         };
     },
     computed: {
         ...mapGetters({
-            all_dev      : 'developments/allDevelopments',
-            all_sections : 'sections/allSections'
+            all_sections : 'sections/allSections',
+            all_dev      : 'developments/allDevelopments'
         })
     },
     mounted() {
-        this.$store.dispatch('developments/getDevelopments');
         this.$store.dispatch('sections/getSections');
     },
     methods: {
-        getDevelopmentBySection() {
-            this.$store.dispatch('developments/getDevBySection', {sel: this.selected});
-        },
-        addDocument(id) {
-            let formData = new FormData();
-            formData.append('file', this.file);
-            // formData.append('id', id);
-
-            axios.post(`/apiplatform/developments/${id}/document`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            ).then(function() {
-                console.log('SUCCESS!!');
-            })
-                .catch(function() {
-                    console.log('FAILURE!!');
-                });
-
-            // let payload = {
-            //     id   : id,
-            //     file : this.file
-            // };
-            // this.$store.dispatch('developments/setDevelopmentDocument', formData);
+        getDevelopmentBySection(selected) {
+            this.$store.dispatch('developments/getDevBySection', {sel: selected});
+            // console.log(this.all_dev);
         }
+        // addDocument(id) {
+        //     let formData = new FormData();
+        //     formData.append('file', this.file);
+        //     // formData.append('id', id);
+        //
+        //     axios.post(`/apiplatform/developments/${id}/document`,
+        //         formData,
+        //         {
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data'
+        //             }
+        //         }
+        //     ).then(function () {
+        //         console.log('SUCCESS!!');
+        //     })
+        //         .catch(function () {
+        //             console.log('FAILURE!!');
+        //         });
+
+        // let payload = {
+        //     id   : id,
+        //     file : this.file
+        // };
+        // this.$store.dispatch('developments/setDevelopmentDocument', formData);
+        //     }
     },
     created: function () {
 

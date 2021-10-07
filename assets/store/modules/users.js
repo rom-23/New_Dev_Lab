@@ -47,7 +47,7 @@ const users = {
             });
         },
         updateUser({commit}, params) {
-            Api.put(
+            Api.patch(
                 `/api/users/edit/${params.id}`, {
                     params
                 },

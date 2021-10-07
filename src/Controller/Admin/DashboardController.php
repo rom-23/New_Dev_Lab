@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Development\Note;
 use App\Entity\Development\Post;
 use App\Entity\Development\Section;
 use App\Entity\Development\Tag;
@@ -48,7 +49,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Development', 'fas fa-list', Development::class),
             MenuItem::linkToCrud('Section', 'fas fa-list', Section::class),
             MenuItem::linkToCrud('Tags', 'fas fa-list', Tag::class),
-            MenuItem::linkToCrud('Posts', 'fas fa-list', Post::class),
+            MenuItem::linkToCrud('Notes', 'fas fa-list', Note::class),
+            MenuItem::linkToCrud('posts', 'fas fa-list', Post::class),
             MenuItem::section('Users'),
             MenuItem::linkToCrud('User', 'fas fa-list', User::class)
         ];

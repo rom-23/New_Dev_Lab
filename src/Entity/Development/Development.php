@@ -5,6 +5,7 @@ namespace App\Entity\Development;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\ApiPlatform\DevSectionController;
 use App\Controller\ApiPlatform\DevUploadController;
+use App\Entity\Development\Post;
 use App\Repository\Development\DevelopmentRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -91,7 +92,8 @@ use Symfony\Component\HttpFoundation\File\File;
             'order' => ['createdAt' => 'DESC']
         ],
         denormalizationContext: ['groups' => ['development:write'], 'enable_max_depth' => true],
-        normalizationContext: ['groups' => ['development:read'], 'enable_max_depth' => true]
+        normalizationContext: ['groups' => ['development:read'], 'enable_max_depth' => true],
+//        security: 'is_granted("ROLE_USER")'
     )]
 class Development
 {
@@ -114,14 +116,13 @@ class Development
     /**
      * @ORM\Column(type="text", nullable="false")
      */
-    #[Groups(['development:read', 'development:write'])]
+    #[Groups(['development:read', 'development:write']), Assert\Length(min:3)]
     #[Assert\NotBlank]
     private string $content;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    #[Groups(['development:read'])]
     private DateTime $createdAt;
 
     /**
@@ -132,7 +133,6 @@ class Development
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
     private ?string $slug;
 
@@ -157,7 +157,7 @@ class Development
      * @var Collection<int, Section>
      * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="developments",cascade={"persist"})
      */
-    #[Groups(['development:read', 'development:write'])]
+    #[Groups(['development:read','development:write'])]
     private $section;
 
     /**
@@ -166,10 +166,16 @@ class Development
     private $tags;
 
     /**
+     * @var Collection<int, Note>
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
+     */
+    #[Assert\Valid]
+    private $notes;
+
+    /**
      * @var Collection<int, Post>
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
-    #[Assert\Valid]
     private $posts;
 
     public function __construct()
@@ -177,7 +183,8 @@ class Development
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->tags      = new ArrayCollection();
-        $this->posts     = new ArrayCollection();
+        $this->notes     = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -334,6 +341,39 @@ class Development
     /**
      * @return Collection
      */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setDevelopment($this);
+        }
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getDevelopment() === $this) {
+                $note->setDevelopment(null);
+            }
+        }
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * @return Collection
+     */
     public function getPosts(): Collection
     {
         return $this->posts;
@@ -345,6 +385,7 @@ class Development
             $this->posts[] = $post;
             $post->setDevelopment($this);
         }
+
         return $this;
     }
 
@@ -356,8 +397,8 @@ class Development
                 $post->setDevelopment(null);
             }
         }
+
         return $this;
     }
-
 
 }

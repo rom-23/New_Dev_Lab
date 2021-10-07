@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -11,6 +12,23 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+
+    #[Route(path: '/apiplatform/login', name: 'api_platform_login', methods: ['POST'])]
+    public function apiPlatformLogin(): JsonResponse
+    {
+        $user = $this->getUser();
+        return $this->json([
+            'username' => $user->getUserIdentifier(),
+            'roles'    => $user->getRoles()
+        ]);
+    }
+
+    #[Route(path: '/logout', name: 'logout', methods: ['POST'])]
+    public function apiPlatformLogout()
+    {
+
+    }
+
     /**
      * @Route("/login", name="app_login")
      * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!apiplatform).+"}, name="vue_routing")

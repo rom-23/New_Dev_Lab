@@ -34,7 +34,6 @@ class DevelopmentEditType extends AbstractType
                 'label'    => false,
                 'required' => true
             ])
-            ->add('slug', TextType::class)
             ->add('file', FileType::class, [
                 'label'    => false,
                 'required' => false,
@@ -46,9 +45,9 @@ class DevelopmentEditType extends AbstractType
                 'search'         => $this->url->generate('api_tag_development'),
                 'label_property' => 'name'
             ])
-            ->add('posts', CollectionType::class, [
-                'label'          => 'Posts',
-                'entry_type'     => PostType::class,
+            ->add('notes', CollectionType::class, [
+                'label'          => 'Notes',
+                'entry_type'     => NoteType::class,
                 'prototype'      => true,
                 'allow_add'      => true,
                 'allow_delete'   => true,
