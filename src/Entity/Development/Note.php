@@ -11,7 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=NoteRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['note:write']],
+    normalizationContext: ['groups' => ['note:read']]
+)]
 class Note
 {
     /**
@@ -20,12 +23,14 @@ class Note
      * @ORM\Column(type="integer")
      * @Groups({"user:get"})
      */
+    #[Groups(['note:read','note:write','development:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"user:get"})
      */
+    #[Groups(['note:read','note:write','development:read'])]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
     private ?string $title;
@@ -34,6 +39,7 @@ class Note
      * @ORM\Column(type="text")
      * @Groups({"user:get"})
      */
+    #[Groups(['note:read','note:write','development:read'])]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
     private ?string $content;
@@ -48,6 +54,7 @@ class Note
      * @ORM\ManyToOne(targetEntity=Development::class, inversedBy="notes")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
+    #[Groups(['note:read'])]
     private ?Development $development = null;
 
     public function __construct()

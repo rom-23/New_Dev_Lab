@@ -33,14 +33,14 @@ use Symfony\Component\HttpFoundation\File\File;
                 'read'               => false,
                 'pagination_enabled' => false,
                 'openapi_context'    => [
-                    'summary'    => 'Récupère la documentation relative à la section',
+                    'summary'    => 'Get development by section',
                     'parameters' => [
                         [
                             'name'        => 'id',
                             'in'          => 'path',
                             'type'        => 'integer',
                             'required'    => true,
-                            'description' => 'Filtre les documentations par section'
+                            'description' => 'Filter developments by section'
                         ]
                     ],
                     'responses'  => [
@@ -102,13 +102,13 @@ class Development
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['development:read'])]
+    #[Groups(['development:read','note:read','post:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['development:read', 'development:write'])]
+    #[Groups(['development:read', 'development:write','note:read','post:read'])]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
     private ?string $title;
@@ -163,12 +163,14 @@ class Development
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
+    #[Groups(['development:read','development:write'])]
     private $tags;
 
     /**
      * @var Collection<int, Note>
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
+    #[Groups(['development:read','development:write'])]
     #[Assert\Valid]
     private $notes;
 
@@ -176,6 +178,7 @@ class Development
      * @var Collection<int, Post>
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
+    #[Groups(['development:read','development:write'])]
     private $posts;
 
     public function __construct()

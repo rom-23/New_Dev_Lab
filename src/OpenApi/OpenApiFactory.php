@@ -47,11 +47,15 @@ class OpenApiFactory implements OpenApiFactoryInterface
                 ]
             ]
         ]);
+// retire le parametre ID de OpenApi pour /apiplatform/me
+        $meOperation = $openApi->getPaths()->getPath('/apiplatform/me')->getGet()->withParameters([]);
+        $mePathItem  = $openApi->getPaths()->getPath('/apiplatform/me')->withGet($meOperation);
+        $openApi->getPaths()->addPath('/apiplatform/me', $mePathItem);
 
         $pathItem = new PathItem(
             post: new Operation(
                 operationId: 'postApiLogin',
-                tags: ['User'],
+                tags: ['Auth'],
                 responses: [
                     '200' => [
                         'description' => 'Utilisateur connecté',
@@ -75,11 +79,23 @@ class OpenApiFactory implements OpenApiFactoryInterface
                 )
             ),
         );
+        $openApi->getPaths()->addPath('/apiplatform/login', $pathItem);
+
+        $pathItem = new PathItem(
+            post: new Operation(
+                operationId: 'postApiLogout',
+                tags: ['Auth'],
+                responses: [
+                    '204' => []
+                ]
+            ),
+        );
+        $openApi->getPaths()->addPath('/logout', $pathItem);
 //        $openApi               = $openApi->withSecurity(['cookieAuth' => []]);
         $openApi = $openApi->withInfo((new Model\Info('New Title', 'v2', 'Description of my custom API'))->withExtensionProperty('info-key', 'Info value'));
         $openApi = $openApi->withExtensionProperty('key', 'Custom x-key value');
         $openApi = $openApi->withExtensionProperty('x-value', 'Custom x-value value');
-        $openApi->getPaths()->addPath('/apiplatform/login', $pathItem);
+
         return $openApi;
     }
 }

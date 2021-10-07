@@ -24,18 +24,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'post' => [
             'security'         => 'is_granted("ROLE_ADMIN")',
             'security_message' => 'Only admins can add users.'
-        ],
-        'me'   => [
-            'pagination_enabled' => false,
-            'path'               => '/me',
-            'method'             => 'get',
-            'controller'         => UserLoginController::class,
-            'read'               => false,
-            'security'           => 'is_granted("ROLE_USER")',
-            'security_message'   => 'Sorry, but you are not the book owner.',
-            'openapi_context'            => [
-                'security' => ['cookieAuth' => ['']]
-            ]
         ]
     ],
     itemOperations: [
@@ -48,13 +36,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'delete' => [
             'security' => 'is_granted("ROLE_ADMIN", object)'
         ],
-        'get'    => [
-            'controller'      => NotFoundAction::class,
-            'openapi_context' => [
-                'summary' => 'hidden'
-            ],
-            'read'            => false,
-            'output'          => false
+        'get',
+        'me'   => [
+            'pagination_enabled' => false,
+            'path'               => '/me',
+            'method'             => 'get',
+            'controller'         => UserLoginController::class,
+            'read'               => false,
+//            'security'           => 'is_granted("ROLE_USER")',
+//            'security_message'   => 'Sorry, but you are not the book owner.',
+            'openapi_context'            => [
+                'security' => ['cookieAuth' => ['']]
+            ]
         ]
     ],
     denormalizationContext: ['groups' => ['user:write']],
@@ -69,14 +62,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * @Groups({"user:get"})
      */
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write','post:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:get"})
      */
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write','post:read'])]
     private ?string $email = null;
 
     /**

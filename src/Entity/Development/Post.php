@@ -25,19 +25,19 @@ class Post
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['post:read','post:write'])]
+    #[Groups(['post:read','post:write','user:read','development:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['post:read','post:write','user:read'])]
+    #[Groups(['post:read','post:write','user:read','development:read'])]
     private ?string $title = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    #[Groups(['post:read','post:write','user:read'])]
+    #[Groups(['post:read','post:write','user:read','development:read'])]
     private ?string $content = null;
 
     /**
@@ -54,6 +54,7 @@ class Post
      * @ORM\ManyToOne(targetEntity=Development::class, inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
+    #[Groups(['post:read'])]
     private ?Development $development = null;
 
     /**
