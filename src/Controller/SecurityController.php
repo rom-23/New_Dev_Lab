@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="app_login")
-     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!apiplatform).+"}, name="vue_routing")
+     * @Route("/{vueRouting}", requirements={"vueRouting"="^(?!apiplatform|symfony).+"}, name="vue_routing")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

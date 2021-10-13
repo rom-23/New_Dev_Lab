@@ -123,7 +123,8 @@ class Development
     /**
      * @ORM\Column(type="datetime")
      */
-    private DateTime $createdAt;
+    #[Groups(['development:read','development:write'])]
+    private ?DateTime $createdAt=null;
 
     /**
      * @ORM\Column(type="datetime")

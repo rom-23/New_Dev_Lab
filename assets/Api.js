@@ -93,6 +93,17 @@ class Api {
         });
     }
 
+    put(path, payload, callback) {
+        return this.service.request({
+            method       : 'PUT',
+            url          : path,
+            responseType : 'json',
+            data         : payload
+        }).then((response) => {
+            return callback(response);
+        });
+    }
+
     post(path, payload, callback) {
         return this.service.request({
             method       : 'POST',

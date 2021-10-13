@@ -1,0 +1,45 @@
+<div class="container dev-by-section">
+    <div class="d-flex text-center">
+        <div class="container mt-4">
+            <span><strong>Symfony Single Page Application</strong></span><br>
+            <span><em>Use Fetch API to call Symfony controller, Response from ApiPlatform</em></span><br>
+            <a href="{{ path('development_list') }}" class="btn btn-outline-danger btn-sm mt-2">Close</a>
+        </div>
+    </div>
+    <div class="dev-view">
+            <div class="card border-0 bg-transparent" style="width: 45rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ dev.title }}</h5>
+                    <small>{{ dev.createdAt|date('d/m/y') }}</small>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ dev.section.title }}</h6>
+                    <p class="card-text">{{ dev.content|raw }}</p>
+                </div>
+            </div>
+            <div class="card" style="width: 38rem;">
+                <p class="card-header text-center">{{ dev.fileUrl }}</p>
+                <div class="card-header">
+                    {% if dev.tags|length > 0 %}
+                        <p class="card-header mt-5">Tags</p>
+                        {% for tag in dev.tags %}
+                            <p class="card-title">{{ tag.name }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if dev.posts|length > 0 %}
+                        <p class="card-header mt-5">Posts</p>
+                        {% for post in dev.posts %}
+                            <p class="card-title">{{ post.title }}</p>
+                            <p class="card-text">{{ post.content|raw }}</p>
+                        {% endfor %}
+                        <a href="#" class="btn btn-outline-primary btn-sm">Add Post</a>
+                    {% endif %}
+                    {% if dev.notes|length > 0 %}
+                        <p class="card-header mt-5">Notes</p>
+                        {% for note in dev.notes %}
+                            <p class="card-title mt-2">{{ note.title }}</p>
+                            <small><p class="card-text">{{ note.content|raw }}</p></small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container dev-by-section">
+    <div class="d-flex text-center">
+        <div class="container mt-4">
+            <span><strong>Symfony Single Page Application</strong></span><br>
+            <span><em>Use Fetch API to call Symfony controller, Response from ApiPlatform</em></span><br>
+            <a href="{{ path('development_list') }}" class="btn btn-outline-danger btn-sm mt-2 mb-4">Close</a>
+        </div>
+    </div>
+    <div class="dev-view">
+        {% for development in dev %}
+            <div class="card" style="width: 25rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ development.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ development.section.title }}</h6>
+                    <a href="#" class="btn btn-outline-success btn-sm">View content...</a>
+                    <p class="card-text">{{ development.tags|length }} Tags</p>
+                    <p class="card-text">{{ development.notes|length }} Notes</p>
+                    <p class="card-text">{{ development.posts|length }} Posts</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

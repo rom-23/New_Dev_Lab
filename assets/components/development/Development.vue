@@ -3,6 +3,9 @@
         <v-layout row justify-space-center>
             <v-row justify="center">
                 <v-col sm="6">
+                    <router-link :to="{ name: 'dev_login'}">
+                        <v-btn small color="primary" class="mt-3">Connect to Api</v-btn>
+                    </router-link>
                     <v-alert text dense color="teal" icon="mdi-clock-fast" border="left">
                         Documentation for Developments, using ApiPlatform
                     </v-alert>

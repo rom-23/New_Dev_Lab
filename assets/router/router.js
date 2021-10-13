@@ -8,7 +8,7 @@ export default new Router({
     base   : process.env.BASE_URL,
     routes : [
         {
-            path       : '/',
+            path       : '/app/vue-js',
             name       : 'home',
             components : {
                 main: () => {
@@ -20,7 +20,7 @@ export default new Router({
             }
         },
         {
-            path       : '/app/modelism',
+            path       : '/app/vue-js/modelism',
             name       : 'modelism',
             components : {
                 main: () => {
@@ -29,7 +29,7 @@ export default new Router({
             }
         },
         {
-            path       : '/app/users',
+            path       : '/app/vue-js/users',
             name       : 'users',
             components : {
                 main: () => {
@@ -38,11 +38,20 @@ export default new Router({
             }
         },
         {
-            path       : '/app/dev',
+            path       : '/app/vue-js/dev',
             name       : 'dev',
             components : {
                 main: () => {
                     return import('../components/development/Development');
+                }
+            }
+        },
+        {
+            path       : '/app/vue-js/dev/login',
+            name       : 'dev_login',
+            components : {
+                main: () => {
+                    return import('../components/auth/Login');
                 }
             }
         }
