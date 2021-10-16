@@ -20,7 +20,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get'  => [
+            'security' => 'is_granted("ROLE_USER")'
+        ],
         'post' => [
             'security'         => 'is_granted("ROLE_ADMIN")',
             'security_message' => 'Only admins can add users.'
@@ -36,16 +38,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'delete' => [
             'security' => 'is_granted("ROLE_ADMIN", object)'
         ],
-        'get',
-        'me'   => [
+        'get'    => [
+            'security' => 'is_granted("ROLE_ADMIN", object)'
+        ],
+        'me'     => [
             'pagination_enabled' => false,
             'path'               => '/me',
             'method'             => 'get',
             'controller'         => UserLoginController::class,
             'read'               => false,
-//            'security'           => 'is_granted("ROLE_USER")',
+            'security'           => 'is_granted("ROLE_USER")',
 //            'security_message'   => 'Sorry, but you are not the book owner.',
-            'openapi_context'            => [
+            'openapi_context'    => [
                 'security' => ['cookieAuth' => ['']]
             ]
         ]
@@ -62,14 +66,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer")
      * @Groups({"user:get"})
      */
-    #[Groups(['user:read', 'user:write','post:read'])]
+    #[Groups(['user:read', 'user:write', 'post:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:get"})
      */
-    #[Groups(['user:read', 'user:write','post:read'])]
+    #[Groups(['user:read', 'user:write', 'post:read', 'development:read'])]
     private ?string $email = null;
 
     /**

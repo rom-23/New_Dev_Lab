@@ -1,5 +1,4 @@
-const secondSuite = document.querySelector('#display-view');
-const secondSuite2 = document.querySelector('#display-view2');
+const view = document.querySelector('#display-view');
 
 function panelView(route) {
     // eslint-disable-next-line func-style
@@ -7,10 +6,9 @@ function panelView(route) {
         try {
             let response = await fetch(route);
             if (response.ok) {
-                secondSuite.innerHTML = '';
-                secondSuite2.innerHTML = '';
+                view.innerHTML = '';
                 let data = await response.json();
-                secondSuite.innerHTML = data['view'];
+                view.innerHTML = data['view'];
             }
         } catch (e) {
             alert(e.message);
@@ -24,6 +22,5 @@ document.querySelectorAll('.dev_item').forEach(function (link) {
         event.preventDefault();
         const route = this.getAttribute('href');
         return panelView(route);
-
     });
 });

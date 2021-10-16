@@ -16,11 +16,15 @@ class SecurityController extends AbstractController
     #[Route(path: '/apiplatform/login', name: 'api_platform_login', methods: ['POST'])]
     public function apiPlatformLogin(): JsonResponse
     {
-        $user = $this->getUser();
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->json([
+                'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
+            ], 400);
+        }
+
         return $this->json([
-            'username' => $user->getUserIdentifier(),
-            'roles'    => $user->getRoles()
-        ]);
+                'user' => $this->getUser() ? $this->getUser()->getUserIdentifier() : null]
+        );
     }
 
     #[Route(path: '/logout', name: 'logout', methods: ['POST'])]

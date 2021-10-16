@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=DevelopmentRepository::class)
+ * @ORM\Table(name="development",
+ *              indexes={@ORM\Index(columns={"title","content"},
+ *                       flags={"fulltext"}
+ *                       )}
+ *            )
  * @Vich\Uploadable
  */
 #[
@@ -102,13 +107,13 @@ class Development
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['development:read','note:read','post:read'])]
+    #[Groups(['development:read', 'note:read', 'post:read'])]
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    #[Groups(['development:read', 'development:write','note:read','post:read'])]
+    #[Groups(['development:read', 'development:write', 'note:read', 'post:read'])]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4)]
     private ?string $title;
@@ -116,15 +121,15 @@ class Development
     /**
      * @ORM\Column(type="text", nullable="false")
      */
-    #[Groups(['development:read', 'development:write']), Assert\Length(min:3)]
+    #[Groups(['development:read', 'development:write']), Assert\Length(min: 3)]
     #[Assert\NotBlank]
     private string $content;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    #[Groups(['development:read','development:write'])]
-    private ?DateTime $createdAt=null;
+    #[Groups(['development:read', 'development:write'])]
+    private ?DateTime $createdAt = null;
 
     /**
      * @ORM\Column(type="datetime")
@@ -158,20 +163,20 @@ class Development
      * @var Collection<int, Section>
      * @ORM\ManyToOne(targetEntity=Section::class, inversedBy="developments",cascade={"persist"})
      */
-    #[Groups(['development:read','development:write'])]
+    #[Groups(['development:read', 'development:write'])]
     private $section;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class)
      */
-    #[Groups(['development:read','development:write'])]
+    #[Groups(['development:read', 'development:write'])]
     private $tags;
 
     /**
      * @var Collection<int, Note>
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
-    #[Groups(['development:read','development:write'])]
+    #[Groups(['development:read', 'development:write'])]
     #[Assert\Valid]
     private $notes;
 
@@ -179,7 +184,7 @@ class Development
      * @var Collection<int, Post>
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="development", orphanRemoval=true, cascade={"persist","remove"})
      */
-    #[Groups(['development:read','development:write'])]
+    #[Groups(['development:read', 'development:write'])]
     private $posts;
 
     public function __construct()
@@ -188,7 +193,7 @@ class Development
         $this->updatedAt = new \DateTime();
         $this->tags      = new ArrayCollection();
         $this->notes     = new ArrayCollection();
-        $this->posts = new ArrayCollection();
+        $this->posts     = new ArrayCollection();
     }
 
     public function getId(): ?int

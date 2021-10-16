@@ -21,7 +21,7 @@ class DevelopmentRepository extends ServiceEntityRepository
 
     public function findDocBySection($title)
     {
-        $sql = "
+        $sql        = "
                 SELECT
                   partial e.{id,title,content},
                   partial ljco.{id, title}
@@ -35,32 +35,24 @@ class DevelopmentRepository extends ServiceEntityRepository
         return $this->getEntityManager()->createQuery($sql)->setParameters($aParameter)->getResult();
     }
 
-    // /**
-    //  * @return Development[] Returns an array of Development objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function searchDevelopment($words)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "
+                SELECT
+                  partial e.{id,title,content},
+                  partial ljco.{id, title}
+            FROM App\Entity\Development\Development e
+            INNER JOIN e.section ljco
+        ";
+        if ($words != null) {
+            $sql .= "
+                    WHERE MATCH_AGAINST(e.title, e.content) AGAINST(:words boolean) > 0
+                    OR MATCH_AGAINST(ljco.title) AGAINST(:words boolean) > 0
+            ";
+            $aParameter = [
+                'words' => $words
+            ];
+        }
+        return $this->getEntityManager()->createQuery($sql)->setParameters($aParameter)->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Development
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

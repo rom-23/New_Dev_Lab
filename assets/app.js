@@ -9,6 +9,7 @@ import vSelect from 'vue-select';
 import { BootstrapVue } from 'bootstrap-vue';
 import './plugins/multi-select';
 import './plugins/fetch';
+import './plugins/development-post';
 import './plugins/tom-select';
 
 Vue.config.productionTip = false;

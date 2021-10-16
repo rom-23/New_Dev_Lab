@@ -1,42 +1,46 @@
 <div class="container dev-by-section">
-    <div class="d-flex text-center">
-        <div class="container mt-4">
-            <span><strong>Symfony Single Page Application</strong></span><br>
-            <span><em>Use Fetch API to call Symfony controller, Response from ApiPlatform</em></span><br>
-            <a href="{{ path('development_list') }}" class="btn btn-outline-danger btn-sm mt-2">Close</a>
+    <div class="d-flex float-end">
+        <div class="container">
+            <a href="{{ path('development_list') }}" class="btn btn-outline-danger btn-sm">X</a>
         </div>
     </div>
     <div class="dev-view">
-            <div class="card border-0 bg-transparent" style="width: 45rem;">
+            <div class="card border-0 p-5" style="max-width: 55rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ dev.title }}</h5>
-                    <small>{{ dev.createdAt|date('d/m/y') }}</small>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ dev.section.title }}</h6>
+                    <h5 class="text-primary">{{ dev.title }}</h5>
+                    <h6 class="text-success">{{ dev.section.title }}</h6>
+                    <small><em>Created on {{ dev.createdAt|date('d/m/y') }}</em></small>
                     <p class="card-text">{{ dev.content|raw }}</p>
                 </div>
             </div>
-            <div class="card" style="width: 38rem;">
+            <div class="card border-0 bg-transparent" style="max-width: 38rem;">
                 <p class="card-header text-center">{{ dev.fileUrl }}</p>
                 <div class="card-header">
                     {% if dev.tags|length > 0 %}
-                        <p class="card-header mt-5">Tags</p>
+                        <p class="card-header mt-2 text-center mb-3">TAGS</p>
                         {% for tag in dev.tags %}
-                            <p class="card-title">{{ tag.name }}</p>
+                            <span class="badge bg-info text-dark m-1">{{ tag.name }}</span>
                         {% endfor %}
                     {% endif %}
                     {% if dev.posts|length > 0 %}
-                        <p class="card-header mt-5">Posts</p>
+                        <p class="card-header mt-4 text-center mb-3">POSTS</p>
                         {% for post in dev.posts %}
-                            <p class="card-title">{{ post.title }}</p>
+                            <h6 class="card-title"><strong>{{ post.title }}</strong></h6>
+                            <p class="card-title text-muted"><em>Posted by {{ post.user.email }}</em></p>
                             <p class="card-text">{{ post.content|raw }}</p>
                         {% endfor %}
-                        <a href="#" class="btn btn-outline-primary btn-sm">Add Post</a>
+{#                        <a href="#" class="btn btn-outline-primary btn-sm">Add Post</a>#}
+{#                        {{ form_start(postForm) }}#}
+{#                        {{ form_widget(postForm.title) }}#}
+{#                        {{ form_widget(postForm.content) }}#}
+{#                        {{ form_end(postForm) }}#}
+
                     {% endif %}
                     {% if dev.notes|length > 0 %}
-                        <p class="card-header mt-5">Notes</p>
+                        <p class="card-header mt-3 text-center mb-3">NOTES</p>
                         {% for note in dev.notes %}
-                            <p class="card-title mt-2">{{ note.title }}</p>
-                            <small><p class="card-text">{{ note.content|raw }}</p></small>
+                            <p class="card-title mt-2"><strong>{{ note.title }}</strong></p>
+                            <p class="card-text"><em>{{ note.content|raw }}</em></p>
                         {% endfor %}
                     {% endif %}
                 </div>

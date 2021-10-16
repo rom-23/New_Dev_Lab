@@ -40,17 +40,14 @@ class Functions
     }
 
     public function convert_csv_file($file)
-    {// recupere le csv du jour GetQuanty
-
+    {
+        // recupere le csv provenant de l'API
         $results = array();
         // convertit le csv en tableau
         function convert_array(&$row, $key, $header)
         {
             $row = array_combine($header, $row);
-        }
-
-        ;
-
+        };
         $array  = array_map('str_getcsv', file($file));
         $header = array_shift($array);
         array_walk($array, 'convert_array', $header);

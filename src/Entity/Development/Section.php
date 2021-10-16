@@ -12,6 +12,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SectionRepository::class)
+ * @ORM\Table(name="section",
+ *              indexes={@ORM\Index(columns={"title"},
+ *                       flags={"fulltext"}
+ *                       )}
+ *            )
  */
 #[ApiResource(
     denormalizationContext: ['groups' => ['section:write']],

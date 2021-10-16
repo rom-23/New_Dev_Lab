@@ -48,6 +48,7 @@ class Api {
                 await Promise.reject(error);
             }
         );
+        axios.defaults.withCredentials = true;
         this.service = service;
     }
 

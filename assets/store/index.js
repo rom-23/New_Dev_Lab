@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import users from './modules/users.js';
+import auth from './modules/auth.js';
 import models from './modules/models.js';
 import developments from './modules/developments.js';
 import sections from './modules/sections.js';
@@ -32,10 +34,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         users,
+        auth,
         models,
         developments,
         sections
     },
-    // plugins : [myPlugin],
-    strict: true
+    plugins : [createPersistedState()],
+    strict  : true
 });

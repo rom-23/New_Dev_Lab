@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class DevelopmentCrudController extends AbstractCrudController
@@ -29,7 +30,7 @@ class DevelopmentCrudController extends AbstractCrudController
         $fields = [
             IdField::new('id', 'ID')->onlyOnIndex(),
             TextField::new('title'),
-            TextEditorField::new('content'),
+            TextEditorField::new('content')->setFormType(CKEditorType::class),
             TextField::new('slug'),
             AssociationField::new('section'),
             AssociationField::new('tags'),
@@ -52,6 +53,7 @@ class DevelopmentCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Crud::PAGE_INDEX, 'All Developments');
+            ->setPageTitle(Crud::PAGE_INDEX, 'All Developments')
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 }

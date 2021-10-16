@@ -6,13 +6,23 @@
                     <v-icon color="white">mdi-home</v-icon>
                 </router-link>
             </v-btn>
-            <div class="flex-grow-1"></div>
             <v-toolbar-items class="nav navLink">
                 <ul class="nav">
                     <router-link :to="{ name: 'users'}">Users</router-link>
                     <router-link :to="{ name: 'dev'}">Dev</router-link>
                     <router-link :to="{ name: 'modelism'}">Modelism</router-link>
                 </ul>
+            </v-toolbar-items>
+            <div class="flex-grow-1"></div>
+            <v-toolbar-items class="nav navLink">
+                    <ul class="nav" v-if="isLoggedIn">
+                        <li class="nav nav-item"><small>{{ username }}</small></li>
+                        <a class="navLink" @click="logout"><em>Logout</em></a>
+                    </ul>
+                    <ul class="nav" v-else>
+                        <router-link :to="{ name: 'dev_register'}">Register</router-link>
+                        <router-link :to="{ name: 'dev_login'}">Login</router-link>
+                    </ul>
             </v-toolbar-items>
         </v-app-bar>
         <v-main>
@@ -39,14 +49,24 @@
     </v-app>
 </template>
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
     name  : 'App',
     props : {},
     data  : () => {
         return {
             drawer: false
-
         };
+    },
+    computed: {
+        ...mapGetters({
+            user     : 'auth/isAuthenticated',
+            username : 'auth/StateUser'
+        }),
+        isLoggedIn: function () {
+            return this.user;
+        }
     },
     mounted: function () {
 
@@ -57,8 +77,13 @@ export default {
     destroyed() {
 
     },
-    methods : {},
-    created : function () {
+    methods: {
+        async logout() {
+            await this.$store.dispatch('auth/LogOut');
+            // await this.$router.push('/app/vue-js/dev');
+        }
+    },
+    created: function () {
 
     }
 };

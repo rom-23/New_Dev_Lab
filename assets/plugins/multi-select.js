@@ -42,3 +42,9 @@ const newItem = (e) => {
 document.querySelectorAll('.btn-remove-post').forEach(btn => { return btn.addEventListener('click', (e) => { return e.currentTarget.closest('.col-4').remove(); }); });
 
 document.querySelectorAll('.btn-new-post').forEach(btn => { return btn.addEventListener('click', newItem); });
+
+window.setTimeout(function() {
+    $('.alert-message').fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+    });
+}, 1500);
